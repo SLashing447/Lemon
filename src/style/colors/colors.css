@@ -1,0 +1,11 @@
+:root {
+    --bg-col: rgb(37, 37, 37);
+    --font: lightgrey;
+    --nav-bg: black;
+    --bar1-bg: rgb(27, 27, 27);
+    --bar2-bg: rgba(255, 255, 255, 0);
+    --srchBar-bg: rgb(17, 17, 17);
+
+    --bg-accent: #39765f80;
+    --bg-accent-h: #39765f33;
+}

@@ -1,0 +1,28 @@
+body {
+    background-color: var(--bg-col);
+}
+
+.flex {
+    display: flex;
+}
+.grid {
+    display: grid;
+}
+.gridCenter {
+    place-items: center;
+}
+.col {
+    flex-direction: column;
+}
+.flexCenter {
+    justify-content: center;
+    align-items: center;
+}
+.flexBetween {
+    justify-content: space-between;
+    align-items: center;
+}
+.flexAround {
+    justify-content: space-around;
+    align-items: center;
+}
