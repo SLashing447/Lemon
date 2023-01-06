@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ChatData } from "../../../../types/Chat";
 import _Contact from "../../../../types/_Contact";
 import Selector from "./Selector/Selector";
 
 interface Contacts {
-    onClick: (data: ChatData) => void;
+    onClick: (data: _Contact) => void;
+
+    visible: boolean;
+
     contacts: Array<_Contact> | null;
 }
 
 function Contacts(props: Contacts) {
     const { Container } = components;
-    const { contacts, onClick } = props;
+    const { contacts, onClick, visible } = props;
     const [selected, setSelected] = useState(-1);
 
     const onSelectorClick = (index: number) => {
         setSelected(index);
+        if (contacts !== null) {
+            onClick(contacts[index]);
+        }
     };
 
     return (
-        <Container className="flex col">
+        <Container visible={visible} className="flex col">
             {contacts ? (
                 contacts.map((data, index) => (
                     <Selector
@@ -38,10 +43,16 @@ function Contacts(props: Contacts) {
 }
 
 const components = {
-    Container: styled.div`
-        overflow: auto;
+    Container: styled.div<{ visible: boolean }>`
+        /* overflow: hidden; */
+        /* overflow-y: auto; */
         gap: 0.15rem;
+        width: 100%;
+        overflow: auto;
+        /* max-height: 90%; */
+        scrollbar-width: none;
         padding: 0.7rem 0;
+        display: ${(props) => (props.visible ? "flex" : "none")};
     `,
 };
 

@@ -54,6 +54,19 @@ const components = {
             height: 100%;
         }
 
+        animation: selShowAnim 0.2s linear;
+
+        @keyframes selShowAnim {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         outline: none !important;
         border: none !important;
 
@@ -69,7 +82,7 @@ const components = {
     `,
     Image: styled.div`
         > img {
-            width: 55px;
+            width: 53px;
             border-radius: 50%;
         }
         height: 100%;
@@ -79,7 +92,7 @@ const components = {
     Data: styled.div`
         > div.username {
             font-weight: bold;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
     `,
 };
