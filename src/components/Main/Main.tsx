@@ -10,6 +10,7 @@ function Main() {
     const [page, setPage] = useState<number>(0); // page index
     const [chatData, setChatData] = useState<_Contact | null>(null);
     const [_keyPress, setKeyPress] = useState<null | string>(null);
+    const [showChatView, setShowChatView] = useState(false);
 
     // Info :
     //  This function returns two components
@@ -30,6 +31,11 @@ function Main() {
 
     const _setChatData = (data: _Contact | null) => {
         setChatData(data);
+        setShowChatView(true);
+    };
+
+    const onChatExit = () => {
+        setShowChatView(false);
     };
 
     return (
@@ -38,9 +44,15 @@ function Main() {
                 _keyPress={_keyPress}
                 setChatData={_setChatData}
                 page={page}
+                isVisible={!showChatView}
             />
             {/* Side Bar Pages */}
-            <Chat _keyPress={_keyPress} data={chatData} />
+            <Chat
+                onChatExit={onChatExit}
+                isVisible={showChatView}
+                _keyPress={_keyPress}
+                data={chatData}
+            />
         </Container>
     );
 }

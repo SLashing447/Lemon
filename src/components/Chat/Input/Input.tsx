@@ -84,6 +84,9 @@ const components = {
         flex-direction: column;
         padding: 1rem;
 
+        position: relative;
+        z-index: 2;
+
         /* background-color: var(--bar1-bg); */
     `,
     Main: styled.div`
@@ -96,6 +99,17 @@ const components = {
 
         outline: none !important;
         /* border: none !important; */
+
+        //n mobile setiings
+        @media screen and (max-width: 1200px) {
+            width: 75%;
+        }
+        @media screen and (max-width: 950px) {
+            width: 85%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 97%;
+        }
     `,
     Input: styled.input`
         border: none !important;

@@ -57,7 +57,7 @@ const components = {
     Message: styled.div<{ dir: "right" | "left" }>`
         width: 100%;
         position: relative;
-        z-index: 7;
+        /* z-index: 3; */
         /* border: 2px solid white; */
         display: flex;
         position: relative;
@@ -107,7 +107,7 @@ const components = {
                 border: none !important;
             }
 
-            box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.545);
+            box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.354);
 
             max-width: 50%;
             @media screen and (max-width: 880px) {
@@ -120,7 +120,7 @@ const components = {
                 max-width: 80%;
             }
 
-            border-radius: 7px;
+            border-radius: 12px;
             background-color: ${(props) =>
                 props.dir === "left"
                     ? "var(--msg-spch-left)"

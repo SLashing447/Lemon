@@ -98,6 +98,8 @@ const components = {
         overflow: auto;
         /* scrollbar-width: none; */
         /* background-color: var(--bar2-bg); */
+        position: relative;
+        z-index: 2;
     `,
     Main: styled.div`
         width: 65%;
@@ -107,6 +109,17 @@ const components = {
         overflow: auto;
         scrollbar-width: none;
         position: relative;
+
+        //n mobile setiings
+        @media screen and (max-width: 1200px) {
+            width: 75%;
+        }
+        @media screen and (max-width: 950px) {
+            width: 85%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 97%;
+        }
     `,
     DateTime: styled.div`
         width: 100%;
@@ -114,7 +127,7 @@ const components = {
         padding: 0.25rem;
         position: sticky;
         top: 7px;
-        z-index: 10;
+        z-index: 2;
         user-select: none;
         cursor: default;
         @keyframes DatePopAnim {
@@ -133,8 +146,9 @@ const components = {
             backdrop-filter: blur(7px);
             background-color: #3d3d3d;
             /* border: 2px solid #1c1b1bcf; */
-            padding: 0.25rem 1rem;
-            border-radius: 7px;
+            padding: 0.2rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
         }
     `,
 };

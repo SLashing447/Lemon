@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import _Contact from "../../../../types/_Contact";
 import Selector from "./Selector/Selector";
 
 interface Contacts {
-    onClick: (data: _Contact) => void;
+    onClick: (data: _Contact, index: number) => void;
 
     visible: boolean;
-
+    selected: number;
     contacts: Array<_Contact> | null;
 }
 
 function Contacts(props: Contacts) {
     const { Container } = components;
-    const { contacts, onClick, visible } = props;
-    const [selected, setSelected] = useState(-1);
+    const { contacts, onClick, visible, selected } = props;
+    // const [selected, setSelected] = useState(-1);
 
     const onSelectorClick = (index: number) => {
-        setSelected(index);
+        // setSelected(index);
         if (contacts !== null) {
-            onClick(contacts[index]);
+            onClick(contacts[index], index);
         }
     };
 
     return (
-        <Container visible={visible} className="flex col">
+        <Container
+            onContextMenu={(e) => e.preventDefault()}
+            visible={visible}
+            className="flex col"
+        >
             {contacts ? (
                 contacts.map((data, index) => (
                     <Selector

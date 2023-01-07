@@ -145,7 +145,11 @@ function Intel(props: props) {
 
 const components = {
     Intel: styled.div<{ anim: string; isGrp: boolean }>`
-        width: 51.5%;
+        width: 68%;
+
+        @media screen and (max-width: 600px) {
+            width: 89%;
+        }
         position: absolute;
         z-index: 10;
 
@@ -203,10 +207,10 @@ const components = {
                 /* scale: 1.1; */
             }
             > span {
-                background-color: #595959;
+                background-color: #464646;
                 padding: 0 0.5rem;
                 border-radius: 4px;
-                border-bottom: 3px solid #2b2b2b;
+                border-bottom: 3px solid #5f5f5f;
             }
             > h3.text::before {
                 content: "/";

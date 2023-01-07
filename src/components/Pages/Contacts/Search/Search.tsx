@@ -12,7 +12,7 @@ import Menu from "../../../Generic/Menu/Menu";
 
 const Navs = [
     {
-        text: "profile",
+        text: "Profile",
         icon: <MdOutlineAccountCircle />,
     },
     {
@@ -33,10 +33,11 @@ interface Search {
     setSrchView: (val: boolean) => void;
     setSrchText: (val: string) => void;
     srchView: boolean;
+    setPageIndexName: (data: string) => void;
 }
 
 function Search(props: Search) {
-    const { setSrchView, setSrchText, srchView } = props;
+    const { setSrchView, setSrchText, srchView, setPageIndexName } = props;
     const { Container, Input } = components;
     const inpRef = useRef<HTMLInputElement | null>(null);
     const [text, setText] = useState("");
@@ -98,6 +99,9 @@ function Search(props: Search) {
                         {Navs.map((data, index) => {
                             return (
                                 <li
+                                    onClick={() =>
+                                        setPageIndexName(Navs[index].text)
+                                    }
                                     key={index}
                                     className={`${
                                         index === 3 ? "red " : ""

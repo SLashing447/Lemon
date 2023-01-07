@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import _Contact from "../../../../../types/_Contact";
+import Menu from "../../../../Generic/Menu/Menu";
 
 interface selectors {
     selected: boolean;
@@ -13,26 +14,57 @@ function Selector(props: selectors) {
     const { Container, Image, Data } = components;
     const { selected, onClick, index } = props;
     const { username, photoURL, update } = props.data;
+    const [menuCords, setMenuCords] = useState<{ x: number; y: number } | null>(
+        null
+    );
+
+    const onContextMenu = (e: any) => {
+        e.preventDefault();
+        // const bnds = e.target.getBoundingClientRect();
+        const x = e.clientX;
+        const y = e.clientY;
+
+        setMenuCords({ x, y });
+    };
 
     return (
-        <Container
-            tabIndex={0}
-            className="flex"
-            onClick={() => onClick(index)}
-            selected={selected}
-        >
-            <Image className="flex flexCenter">
-                <img src={photoURL} />
-            </Image>
-            <Data className="flex flexCenter">
-                <div className="username">{username}</div>
-                {update && <div className="update">{update}</div>}
-            </Data>
-        </Container>
+        <>
+            {" "}
+            {menuCords && (
+                <Menu
+                    pos={{ x: menuCords.x, y: menuCords.y }}
+                    kill={() => setMenuCords(null)}
+                    align="left"
+                >
+                    <>
+                        <li>Mute Chat</li>
+                        <li>Add to Folder</li>
+                        <li>Pin Chat</li>
+                        <li className="red">Delete Chat</li>
+                    </>
+                </Menu>
+            )}
+            <Container
+                onContextMenu={onContextMenu}
+                tabIndex={0}
+                hover={menuCords !== null}
+                className="flex"
+                onClick={() => onClick(index)}
+                selected={selected}
+            >
+                <Image className="flex flexCenter">
+                    <img src={photoURL} />
+                </Image>
+                <Data className="flex flexCenter">
+                    <div className="username">{username}</div>
+                    {update && <div className="update">{update}</div>}
+                </Data>
+            </Container>
+        </>
     );
 }
 const components = {
-    Container: styled.div<{ selected: boolean }>`
+    Container: styled.div<{ selected: boolean; hover: boolean }>`
         position: relative;
 
         padding: 0.45rem 1rem;
@@ -73,9 +105,8 @@ const components = {
         :active {
             scale: 0.995;
         }
-        /* border: 2px solid white; */
-        :hover,
-        :focus-within {
+
+        :hover {
             background-color: ${(props) =>
                 props.selected ? "var(--bg-accent)" : "var(--bg-accent-h)"};
         }

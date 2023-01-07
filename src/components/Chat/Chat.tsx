@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ChatData } from "../../types/Chat";
 import _Contact from "../../types/_Contact";
+import ChatBackground from "../addons/ChatBackground";
 import Input from "./Input/Input";
 import Nav from "./Nav/Nav";
 import Screen from "./Screen/Screen";
@@ -9,15 +10,17 @@ import Screen from "./Screen/Screen";
 interface props {
     data: _Contact | null;
     _keyPress: string | null;
+    isVisible: boolean;
+    onChatExit: () => void;
 }
 
 function Chat(props: props) {
     const { Container, NoChat, Main } = components;
-    const { data, _keyPress } = props;
+    const { data, _keyPress, isVisible, onChatExit } = props;
     const dbId = data?.userID; // db Id
 
     return (
-        <Container>
+        <Container isVisible={isVisible}>
             {data === null ? (
                 <NoChat className="flex flexCenter col">
                     <h1>Welcome 👋</h1>
@@ -25,7 +28,8 @@ function Chat(props: props) {
                 </NoChat>
             ) : (
                 <Main>
-                    <Nav data={data} />
+                    <ChatBackground />
+                    <Nav onExit={onChatExit} data={data} />
                     <Screen />
                     <Input _keyPress={_keyPress} />
                 </Main>
@@ -35,21 +39,34 @@ function Chat(props: props) {
 }
 
 const components = {
-    Container: styled.div`
+    Container: styled.div<{ isVisible: boolean }>`
         width: 75%;
         height: 100%;
         background-color: var(--bar2-bg);
+
+        @keyframes showChatAnim {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            width: 100%;
+            display: ${(props) => (props.isVisible ? "flex" : "none")};
+            animation: showChatAnim 0.156s linear;
+        }
     `,
     Main: styled.div`
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
-
-        /* background-image: url("https://assets.codepen.io/4787486/night-stars.jpg");
-        background-size: contain;
-        background-position: center;
-        background-repeat: repeat; */
+        position: relative;
     `,
     NoChat: styled.div`
         width: 100%;

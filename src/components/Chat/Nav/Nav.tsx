@@ -5,9 +5,11 @@ import { AiOutlineClear } from "react-icons/ai";
 import _Contact from "../../../types/_Contact";
 import Menu from "../../Generic/Menu/Menu";
 import { MdBlock, MdOutlineFullscreenExit, MdReport } from "react-icons/md";
+import { IoArrowBack } from "react-icons/Io5";
 
 interface props {
     data: _Contact;
+    onExit: () => void;
 }
 const IconStyle = {
     fontSize: "1.2rem",
@@ -38,7 +40,7 @@ const Navs = [
 
 function Nav(props: props) {
     const { Container, Image, Data, Main } = components;
-    const { data } = props;
+    const { data, onExit } = props;
     const { photoURL, update, userID, username } = data;
     const [showMenu, setShowMenu] = useState(false);
 
@@ -46,6 +48,9 @@ function Nav(props: props) {
 
     return (
         <Container className="flex flexBetween">
+            <span onClick={onExit} className="icon back">
+                <IoArrowBack />
+            </span>
             <Main className="flex">
                 <Image src={photoURL} />
                 <Data className="flex flexCenter">
@@ -98,12 +103,24 @@ const components = {
         width: 100%;
         /* height: 100%; */
         padding: 0.7rem 2rem;
+        position: relative;
+        z-index: 3;
 
         /* flex-direction: column; */
         /* border: 1px solid white; */
         background-color: var(--bar1-bg);
         //background-color: #000000c2;
+
         // backdrop-filter: blur(10px);
+        @media screen and (max-width: 600px) {
+            padding: 0.7rem 1rem;
+        }
+        @media screen and (min-width: 600px) {
+            > span.icon.back {
+                display: none;
+            }
+        }
+
         > span.icon {
             font-size: 1.6rem;
             border-radius: 50%;
@@ -122,6 +139,9 @@ const components = {
         position: relative;
         cursor: pointer;
         width: 70%;
+        @media screen and (max-width: 600px) {
+            width: fit-content;
+        }
         ::after {
             content: "";
             position: absolute;
@@ -135,11 +155,17 @@ const components = {
         width: 52px;
         border-radius: 50%;
         margin-right: 1rem;
+        @media screen and (max-width: 600px) {
+            width: 48px;
+        }
     `,
     Data: styled.div`
         > div.username {
             font-weight: bold;
             font-size: 1.2rem;
+            @media screen and (max-width: 600px) {
+                font-size: 1.01rem;
+            }
         }
         > div {
             font-size: 1.1rem;
