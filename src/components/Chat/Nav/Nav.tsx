@@ -10,6 +10,7 @@ import { IoArrowBack } from "react-icons/Io5";
 interface props {
     data: _Contact;
     onExit: () => void;
+    onClick: () => void;
 }
 const IconStyle = {
     fontSize: "1.2rem",
@@ -40,7 +41,7 @@ const Navs = [
 
 function Nav(props: props) {
     const { Container, Image, Data, Main } = components;
-    const { data, onExit } = props;
+    const { data, onExit, onClick } = props;
     const { photoURL, update, userID, username } = data;
     const [showMenu, setShowMenu] = useState(false);
 
@@ -51,7 +52,7 @@ function Nav(props: props) {
             <span onClick={onExit} className="icon back">
                 <IoArrowBack />
             </span>
-            <Main className="flex">
+            <Main onClick={onClick} className="flex">
                 <Image src={photoURL} />
                 <Data className="flex flexCenter">
                     {update && <div className="update">{update}</div>}
@@ -125,13 +126,13 @@ const components = {
             font-size: 1.6rem;
             border-radius: 50%;
             cursor: pointer;
-            padding: 0.25rem;
+            padding: 0.45rem;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: 0.12s all ease;
             :hover {
-                background-color: #00000034;
+                background-color: #ffffff15;
             }
         }
     `,

@@ -4,13 +4,14 @@ import { ChatData } from "../../types/Chat";
 import _Contact from "../../types/_Contact";
 import Chat from "../Chat/Chat";
 import Pages from "../Pages/Pages";
+import Profile from "../Pages/Profile/Profile";
 
 function Main() {
     const { Container } = components;
-    const [page, setPage] = useState<number>(0); // page index
     const [chatData, setChatData] = useState<_Contact | null>(null);
     const [_keyPress, setKeyPress] = useState<null | string>(null);
     const [showChatView, setShowChatView] = useState(false);
+    const [selectedChat, setSelectedChat] = useState(-2);
 
     // Info :
     //  This function returns two components
@@ -36,14 +37,20 @@ function Main() {
 
     const onChatExit = () => {
         setShowChatView(false);
+        setChatData(null);
+        console.log("I AM HERE ");
+        setSelectedChat(-1);
     };
 
     return (
         <Container className="flex">
             <Pages
-                _keyPress={_keyPress}
-                setChatData={_setChatData}
-                page={page}
+                ContactPageProps={{
+                    setSelectedChat: setSelectedChat,
+                    selectedChat: selectedChat,
+                    _keyPress: _keyPress,
+                    setChatData: _setChatData,
+                }}
                 isVisible={!showChatView}
             />
             {/* Side Bar Pages */}

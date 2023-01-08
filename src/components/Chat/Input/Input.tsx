@@ -1,18 +1,27 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiSend } from "react-icons/bi";
+import { CgAdd } from "react-icons/cg";
 import Intel from "./Intel/Intel";
+import AttachmentMenu from "./AttachmentMenu/AttachmentMenu";
+import Menu from "../../Generic/Menu/Menu";
 
 interface props {
     _keyPress: string | null;
 }
 
 function Input(props: props) {
-    const { Container, Main, Input, Send } = components;
+    const { Container, Main, Input, Send, Command, CommandsContainer } =
+        components;
     const InpRef = useRef<HTMLInputElement | null>(null);
     const { _keyPress } = props;
     const [text, setText] = useState("");
     const [showCommands, setShowCommands] = useState(false);
+    const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+
+    const [textCommands, setTextCommands] = useState<Array<string> | null>(
+        null
+    );
 
     const onFocus = () => {
         InpRef.current?.focus();
@@ -33,18 +42,46 @@ function Input(props: props) {
     };
 
     const setCommand = (cmd: string) => {
-        console.log(cmd);
-    };
-
-    const InputKeyPressHandler = (e: any) => {
-        let key = e.key;
-        if (key === "Tab") {
-            e.preventDefault();
+        if (textCommands !== null) {
+            setTextCommands([...textCommands, cmd]);
+        } else {
+            setTextCommands([cmd]);
         }
     };
 
+    // TODO : FIX ALL THE COMMANDS  ORIENTED BUGSS ASAP 🙏🙏
+    const checkCombination = (cmd: string) => {};
+
+    const InputKeyPressHandler = (e: any) => {
+        let key = e.key;
+        if (key === "Tab" || key === "ArrowUp" || key === "ArrowDown") {
+            e.preventDefault();
+        }
+        if (
+            key === "Backspace" &&
+            text.trim() === "" &&
+            textCommands !== null
+        ) {
+            // textCommands.pop();
+        }
+    };
+
+    const _showAttachMentMenu = () => {
+        setShowAttachmentMenu(true);
+    };
+
+    const onKillCommand = (e: string) => {};
+
     return (
         <Container className="flex flexCenter" tabIndex={-1}>
+            <CommandsContainer>
+                <main>
+                    {textCommands &&
+                        textCommands.map((data, index) => {
+                            return <Command key={index}>{data}</Command>;
+                        })}
+                </main>
+            </CommandsContainer>
             {showCommands && (
                 <Intel
                     isGrp={false}
@@ -55,12 +92,23 @@ function Input(props: props) {
                     setTextFilter={setCommand}
                 />
             )}
+            {showAttachmentMenu && (
+                <AttachmentMenu kill={() => setShowAttachmentMenu(false)} />
+            )}
             <Main
                 onFocus={onFocus}
                 onFocusCapture={onFocus}
                 className="flex"
                 tabIndex={0}
             >
+                {" "}
+                <button
+                    onClick={_showAttachMentMenu}
+                    className="cmd-btn flex flexCenter"
+                    tabIndex={-1}
+                >
+                    <CgAdd />
+                </button>
                 <Input
                     onKeyDown={InputKeyPressHandler}
                     value={text}
@@ -76,6 +124,7 @@ function Input(props: props) {
         </Container>
     );
 }
+
 const components = {
     Container: styled.div`
         width: 100%;
@@ -89,6 +138,36 @@ const components = {
 
         /* background-color: var(--bar1-bg); */
     `,
+
+    CommandsContainer: styled.div`
+        position: absolute;
+        bottom: 69px;
+        width: 100%;
+        /* background-color: red; */
+        /* height: 100px; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        > main {
+            width: 68.4%;
+            /* background-color: purple; */
+            display: flex;
+            gap: 0.5rem;
+        }
+    `,
+    Command: styled.div`
+        /* width: %; */
+        border: 2px solid white;
+        padding: 0.2rem 2rem;
+        border-radius: 6px;
+        position: relative;
+        cursor: default;
+        user-select: none;
+        background-color: #1b1b1b;
+        border: 2px solid #373636;
+        box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
+    `,
+
     Main: styled.div`
         background-color: #1b1b1b;
         width: 70%;
@@ -109,6 +188,31 @@ const components = {
         }
         @media screen and (max-width: 700px) {
             width: 97%;
+        }
+
+        > button.cmd-btn {
+            outline: none !important;
+
+            background-color: transparent;
+            font-size: 1.7rem;
+            :hover {
+                > svg > path {
+                    color: white;
+                }
+            }
+            > svg > path {
+                color: #a4a4a4;
+            }
+
+            padding: 0 0.3rem;
+
+            border-radius: 50%;
+            margin-right: 0.3rem;
+            border: none;
+            cursor: pointer;
+            :hover {
+                background-color: #3d3d3d73;
+            }
         }
     `,
     Input: styled.input`

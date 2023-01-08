@@ -34,6 +34,12 @@ const Components = {
         :hover {
             background-color: #ffffff10;
         }
+        :hover > div > svg > path {
+            color: white;
+        }
+        :hover > div {
+            color: white;
+        }
     `,
     NewFolder: styled.div`
         border: 2px dashed var(--bg-accent);

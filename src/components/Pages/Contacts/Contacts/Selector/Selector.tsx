@@ -1,22 +1,47 @@
 import React, { useState } from "react";
+import { BiFolderPlus } from "react-icons/bi";
+import { BsPinAngleFill, BsVolumeMuteFill } from "react-icons/Bs";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import styled from "styled-components";
 import _Contact from "../../../../../types/_Contact";
+import createRipple from "../../../../Generic/createRipple/createRipple";
 import Menu from "../../../../Generic/Menu/Menu";
 
 interface selectors {
-    selected: boolean;
+    isSelected: boolean;
     data: _Contact;
     index: number;
     onClick: (index: number) => void;
 }
+// MdOutlineDeleteOutline;
+const Navs = [
+    {
+        text: "Mute Chat",
+        icon: <BsVolumeMuteFill />,
+    },
+    {
+        text: "Add to Folder",
+        icon: <BiFolderPlus />,
+    },
+    {
+        text: "Pin Chat",
+        icon: <BsPinAngleFill />,
+    },
+    {
+        text: "Delete Chat",
+        icon: <MdOutlineDeleteOutline />,
+    },
+];
 
 function Selector(props: selectors) {
     const { Container, Image, Data } = components;
-    const { selected, onClick, index } = props;
+    const { isSelected, onClick, index } = props;
     const { username, photoURL, update } = props.data;
     const [menuCords, setMenuCords] = useState<{ x: number; y: number } | null>(
         null
     );
+
+    console.log("Contact id : ", index, "isSelected : ", isSelected);
 
     const onContextMenu = (e: any) => {
         e.preventDefault();
@@ -27,6 +52,16 @@ function Selector(props: selectors) {
         setMenuCords({ x, y });
     };
 
+    const IStyle = {
+        fontSize: "1.3rem",
+        marginRight: "1rem",
+    };
+
+    const onSelectorClick = (e: any) => {
+        onClick(index);
+        createRipple(e);
+    };
+
     return (
         <>
             {" "}
@@ -35,22 +70,35 @@ function Selector(props: selectors) {
                     pos={{ x: menuCords.x, y: menuCords.y }}
                     kill={() => setMenuCords(null)}
                     align="left"
+                    animationOrigin="top left"
                 >
                     <>
-                        <li>Mute Chat</li>
-                        <li>Add to Folder</li>
-                        <li>Pin Chat</li>
-                        <li className="red">Delete Chat</li>
+                        {Navs.map((data, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    className={`flex${
+                                        index === 3 ? " red" : ""
+                                    }`}
+                                >
+                                    <span
+                                        style={IStyle}
+                                        className="icon flex flexCenter"
+                                    >
+                                        {data.icon}
+                                    </span>
+                                    <span className="text">{data.text}</span>
+                                </li>
+                            );
+                        })}
                     </>
                 </Menu>
             )}
             <Container
                 onContextMenu={onContextMenu}
-                tabIndex={0}
                 hover={menuCords !== null}
-                className="flex"
-                onClick={() => onClick(index)}
-                selected={selected}
+                onClick={onSelectorClick}
+                selected={isSelected}
             >
                 <Image className="flex flexCenter">
                     <img src={photoURL} />
@@ -65,18 +113,25 @@ function Selector(props: selectors) {
 }
 const components = {
     Container: styled.div<{ selected: boolean; hover: boolean }>`
+        display: flex;
+        flex-shrink: 0;
         position: relative;
-
+        overflow: hidden;
         padding: 0.45rem 1rem;
         cursor: pointer;
         margin: 0 0.5rem;
         border-radius: 10px;
         transition: 0.2s all ease;
+        /* @media screen and (max-width: 600px) {
+            background-color: rgba(0, 0, 0, 0);
+        } */
         background-color: ${(props) =>
             props.selected ? "var(--bg-accent)" : ""};
 
         box-shadow: ${(props) =>
-            props.selected ? " 0 0 0.2rem rgba(0,0,0,0.2)" : "none"};
+            props.selected
+                ? " 0 0 0.2rem rgba(0,0,0,0.2)"
+                : "rgba(0, 0, 0, 0)"};
         ::after {
             content: "";
             position: absolute;

@@ -11,12 +11,13 @@ interface props {
     kill: () => void;
     children: any;
     backDropZIndex?: number;
-
+    animationOrigin?: string;
     align?: "left" | "right";
+    bg?: string;
 }
 
 function Menu(props: props) {
-    const { children, kill, align } = props;
+    const { children, kill, align, animationOrigin, bg } = props;
     const style = props.style || {};
     const backDropZIndex = props.backDropZIndex || 6;
     const MenuZIndex = backDropZIndex + 2;
@@ -51,8 +52,12 @@ function Menu(props: props) {
                     ...style,
                     ...__a(),
                     position: "absolute",
-                    transformOrigin: `top ${align || "right"}`,
+                    transformOrigin:
+                        animationOrigin === undefined
+                            ? "top right"
+                            : animationOrigin,
                     zIndex: MenuZIndex,
+                    backgroundColor: bg !== undefined ? bg : "#222222",
                 }}
                 anim={anim}
                 pos={pos}
@@ -72,15 +77,17 @@ const components = {
         width: 100vw;
         height: 100vh;
     `,
-    MenuUi: styled.div<{ pos: { x: number; y: number }; anim: string }>`
+    MenuUi: styled.div<{
+        pos: { x: number; y: number };
+        anim: string;
+    }>`
         position: absolute;
         /* top: ${(props) => props.pos.y}px;
         right: ${(props) => props.pos.x}px; */
         padding: 0.5rem 0.25rem;
 
-        background-color: #222222;
-        /* background-color: var(--bg-p5); */
-        backdrop-filter: blur(10px);
+        /* background-color: ; */
+
         gap: 0.15rem;
         border-radius: 7px;
         /* transform-origin: top right;/ */

@@ -13,7 +13,12 @@ import Menu from "../../../Generic/Menu/Menu";
 const Navs = [
     {
         text: "Profile",
-        icon: <MdOutlineAccountCircle />,
+        icon: (
+            <img
+                style={{ width: "23px", borderRadius: "50%" }}
+                src={"https://randomuser.me/api/portraits/men/61.jpg"}
+            />
+        ),
     },
     {
         text: "Settings",
@@ -33,11 +38,13 @@ interface Search {
     setSrchView: (val: boolean) => void;
     setSrchText: (val: string) => void;
     srchView: boolean;
+    _keyPress: string | null;
     setPageIndexName: (data: string) => void;
 }
 
 function Search(props: Search) {
-    const { setSrchView, setSrchText, srchView, setPageIndexName } = props;
+    const { setSrchView, setSrchText, srchView, setPageIndexName, _keyPress } =
+        props;
     const { Container, Input } = components;
     const inpRef = useRef<HTMLInputElement | null>(null);
     const [text, setText] = useState("");
@@ -73,13 +80,21 @@ function Search(props: Search) {
         onBlur();
     };
 
-    const _showMenu = () => {
+    const _showMenu = (e: any) => {
         setShowMenu(true);
     };
 
     const IconStyle = {
         fontSize: "1.2rem",
         marginRight: "0.8rem",
+    };
+
+    useEffect(() => onKeyPress(_keyPress), [_keyPress]);
+
+    const onKeyPress = (key: string | null) => {
+        if (key === "Escape") {
+            setShowMenu(false);
+        }
     };
 
     return (
@@ -94,6 +109,7 @@ function Search(props: Search) {
                     pos={{ x: 20, y: 60 }}
                     style={{ width: "9rem" }}
                     align="left"
+                    animationOrigin="top left"
                 >
                     <>
                         {Navs.map((data, index) => {
@@ -155,6 +171,7 @@ const components = {
         gap: 0.7rem;
         padding: 1rem;
         > .icon {
+            position: relative;
             font-size: 1.8rem;
             border-radius: 50%;
             transition: 0.14s all ease;

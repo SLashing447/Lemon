@@ -10,17 +10,31 @@ import Profile from "./Profile/Profile";
 import { Settings } from "./Settings/Settings";
 import UserQuery from "./UserQuery/UserQuery";
 
-interface Page {
+interface ContactsPageProps {
     _keyPress: string | null;
-    isVisible: boolean;
+    selectedChat: number;
+    setSelectedChat: (val: number) => void;
     setChatData: (data: _Contact | null) => void;
 }
 
-function Pages(props: Page) {
-    const { setChatData, _keyPress, isVisible } = props;
+interface props {
+    ContactPageProps: ContactsPageProps;
+    isVisible: boolean;
+}
+
+function Pages(props: props) {
+    const ContactPageProps = props.ContactPageProps;
     const { Container, Header, OtherPagesContainer } = components;
+    const { isVisible } = props;
     const [pageIndexName, setPageIndexName] = useState("chats");
     // const [route, setRoute] = useState("/chats");
+    const username = "Slashing_corgi";
+
+    useEffect(() => {
+        if (pageIndexName === "Profile") {
+            setPageIndexName(username);
+        }
+    }, [pageIndexName]);
 
     const onRouteUpdate = (i: string) => {
         setPageIndexName(`${pageIndexName}/${i}`);
@@ -39,7 +53,17 @@ function Pages(props: Page) {
         }
 
         setPageIndexName(name);
-        console.log(pageIndexName);
+    };
+
+    // On Escape go Back
+    useEffect(() => {
+        onKeyPress(props.ContactPageProps._keyPress);
+    }, [props.ContactPageProps._keyPress]);
+
+    const onKeyPress = (key: string | null) => {
+        if (key === "Escape") {
+            onBack();
+        }
     };
 
     return (
@@ -47,8 +71,7 @@ function Pages(props: Page) {
             {pageIndexName === "chats" && (
                 <ContactPage
                     setPageIndexName={setPageIndexName}
-                    _keyPress={_keyPress}
-                    setChatData={setChatData}
+                    data={ContactPageProps}
                 />
             )}
             {pageIndexName !== "chats" && (
@@ -69,8 +92,12 @@ function Pages(props: Page) {
                                 updateRoute={onRouteUpdate}
                             />
                         )}
-                        {pageIndexName.startsWith("Profile") && <Profile />}
+
                         {pageIndexName.startsWith("Devices") && <Devices />}
+                        {!pageIndexName.startsWith("Devices") &&
+                            !pageIndexName.startsWith("Settings") && (
+                                <Profile />
+                            )}
                     </OtherPagesContainer>
                 </>
             )}
@@ -79,19 +106,26 @@ function Pages(props: Page) {
 }
 
 interface ContactPage {
-    setChatData: (val: _Contact | null) => void;
-    _keyPress: string | null;
+    data: ContactsPageProps;
     setPageIndexName: (data: string) => void;
 }
 
+// ! Contacts View Page (CHATS)
 function ContactPage(props: ContactPage) {
+    const { setChatData, _keyPress, selectedChat, setSelectedChat } =
+        props.data;
+    const { setPageIndexName } = props;
+
     const [srchView, setSrchView] = useState(false);
     const [srchText, setSrchText] = useState("");
     const [contacts, setContacts] = useState<Array<_Contact> | null>(null);
-    const [selected, setSelected] = useState(-1);
+    // const [selectedChat, setSelectedChat] = useState(-1);
     // const [pageIndexName, setPageIndexName] = useState("");
 
-    const { setChatData, _keyPress, setPageIndexName } = props;
+    // useEffect(() => {
+    //     // setSelectedChat(selChat);
+    //     console.log(selChat + "🥵🥵🥵🥵🥵");
+    // }, [selChat]);
 
     useEffect(() => {
         FetchContacts();
@@ -107,7 +141,7 @@ function ContactPage(props: ContactPage) {
                 return;
             }
             setChatData(null);
-            setSelected(-1);
+            setSelectedChat(-1);
         }
     };
 
@@ -115,13 +149,14 @@ function ContactPage(props: ContactPage) {
         setSrchText(text);
     };
     const onContactClick = (data: _Contact, index: number) => {
-        setSelected(index);
+        setSelectedChat(index);
         setChatData(data);
     };
 
     return (
         <>
             <Search
+                _keyPress={_keyPress}
                 srchView={srchView}
                 setSrchText={_setSrchText}
                 setSrchView={setSrchView}
@@ -129,7 +164,7 @@ function ContactPage(props: ContactPage) {
             />
             <UserQuery text={srchText} visible={srchView} />
             <Contacts
-                selected={selected}
+                selected={selectedChat}
                 visible={!srchView}
                 onClick={onContactClick}
                 contacts={contacts}
