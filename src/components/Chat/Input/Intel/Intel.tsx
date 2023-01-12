@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 interface props {
@@ -8,23 +8,25 @@ interface props {
     setShowIntel: (val: boolean) => void;
     _keyPress: string | null;
     isGrp: boolean; // grp settings for input
+    ExistingCommands: Array<string> | null;
 }
 
-const commands = [
-    "spoiler",
-    "nsfw",
-    "disappear",
-    "placeholder",
-    "info4",
-    "info5",
-];
+const commands = ["spoiler", "nsfw", "disappear", "placeholder"];
 
 function Intel(props: props) {
     const [filteredCommands, setFilteredCommands] = useState<Array<string>>([]);
 
     const { Intel } = components;
-    const { text, setTextFilter, showIntel, setShowIntel, _keyPress, isGrp } =
-        props;
+    const {
+        text,
+        setTextFilter,
+        showIntel,
+        setShowIntel,
+
+        _keyPress,
+        isGrp,
+        ExistingCommands,
+    } = props;
     // isGrp is the setting for grp Textcommand
 
     const [selCmd, setSelCmd] = useState(0);
@@ -59,7 +61,7 @@ function Intel(props: props) {
                 // setTextFilter(text);
 
                 // ? manual Type
-                console.log("Here ", text);
+
                 setTextFilter(text.replace("/", ""));
             }
         }
@@ -111,7 +113,10 @@ function Intel(props: props) {
     };
 
     const sendAddon = (val: string) => {
-        setTextFilter(val);
+        if (val === undefined || val.trim() === "") return;
+        if (ExistingCommands === null || ExistingCommands.indexOf(val) === -1) {
+            setTextFilter(val);
+        }
         setVisibility(false);
     };
 
@@ -145,11 +150,24 @@ function Intel(props: props) {
 
 const components = {
     Intel: styled.div<{ anim: string; isGrp: boolean }>`
-        width: 68%;
+        width: 68.5%;
 
         @media screen and (max-width: 600px) {
             width: 89%;
         }
+        @media screen and (max-width: 1200px) {
+            width: 72%;
+        }
+        @media screen and (max-width: 950px) {
+            width: 81%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
+        @media screen and (max-width: 580px) {
+            width: 91%;
+        }
+
         position: absolute;
         z-index: 10;
 
@@ -157,8 +175,8 @@ const components = {
         /* height: 1rem; */
         border-radius: 10px;
         box-shadow: 0 0 0.1rem black;
-        background-color: rgba(36, 36, 36, 0.25);
-        backdrop-filter: blur(2px);
+        background-color: rgba(36, 36, 36, 0.122);
+        backdrop-filter: blur(12px);
         animation: ${(props) => props.anim};
         padding: 0.7rem 1.2rem;
         /* border: 2px solid var(--bg-p2); */

@@ -12,7 +12,8 @@ const conts: _Contact[] = [
         username: "_slam123",
         photoURL: "https://randomuser.me/api/portraits/men/21.jpg",
         userID: "user123",
-        update: null,
+
+        update: "Hello World My Name is AIshik Chakraborty",
     },
     {
         username: "hermit_fi",

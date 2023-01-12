@@ -13,7 +13,7 @@ import styled from "styled-components";
 
 interface props {
     type?: "chat" | "normal";
-    onExit: () => void;
+    onExit?: () => void;
 }
 
 function Profile(props: props) {
@@ -115,6 +115,7 @@ const components = {
     Container: styled.div<{ redundant: boolean }>`
         height: 100%;
         transition: 0.16s all ease;
+
         border-left: ${(props) =>
             !props.redundant ? "2px solid #3d3d3d" : "none"};
 
@@ -154,7 +155,12 @@ const components = {
             width: 100%;
 
             overflow: auto;
+            border-top-left-radius: ${(props) =>
+                props.redundant === true ? "10px" : ""};
+            border-top-right-radius: ${(props) =>
+                props.redundant === true ? "10px" : ""};
         }
+
         /* padding: 0.6rem; */
     `,
     BgImage: styled.div`

@@ -138,10 +138,7 @@ function ContactPage(props: ContactPage) {
         if (key === "Escape") {
             if (srchView) {
                 setSrchView(false);
-                return;
             }
-            setChatData(null);
-            setSelectedChat(-1);
         }
     };
 

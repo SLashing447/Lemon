@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { BsFillVolumeMuteFill, BsThreeDotsVertical } from "react-icons/Bs";
+import {
+    BsFillVolumeMuteFill,
+    BsFlag,
+    BsThreeDotsVertical,
+} from "react-icons/Bs";
 import { AiOutlineClear } from "react-icons/ai";
 import _Contact from "../../../types/_Contact";
 import Menu from "../../Generic/Menu/Menu";
@@ -11,6 +15,9 @@ interface props {
     data: _Contact;
     onExit: () => void;
     onClick: () => void;
+    isNavMenuOpen: boolean;
+    setNavMenuOpen: () => void;
+    isTyping: boolean;
 }
 const IconStyle = {
     fontSize: "1.2rem",
@@ -26,12 +33,8 @@ const Navs = [
         icon: <AiOutlineClear />,
     },
     {
-        text: "close chat",
-        icon: <MdOutlineFullscreenExit />,
-    },
-    {
         text: "report chat ",
-        icon: <MdReport />,
+        icon: <BsFlag />,
     },
     {
         text: "block user",
@@ -41,8 +44,9 @@ const Navs = [
 
 function Nav(props: props) {
     const { Container, Image, Data, Main } = components;
-    const { data, onExit, onClick } = props;
-    const { photoURL, update, userID, username } = data;
+    const { data, onExit, onClick, isNavMenuOpen, setNavMenuOpen, isTyping } =
+        props;
+    const { photoURL, userID, username } = data;
     const [showMenu, setShowMenu] = useState(false);
 
     const IconStyle = { fontSize: "1.57rem", marginRight: "1rem" };
@@ -55,19 +59,21 @@ function Nav(props: props) {
             <Main onClick={onClick} className="flex">
                 <Image src={photoURL} />
                 <Data className="flex flexCenter">
-                    {update && <div className="update">{update}</div>}
+                    {isTyping && <div className="update">Typing ... </div>}
                     <div className="username">{username}</div>
                 </Data>
             </Main>
-            <span onClick={() => setShowMenu(true)} className="icon">
+            <span
+                onClick={() => {
+                    setShowMenu(true);
+                    setNavMenuOpen(); // for the parent chat
+                }}
+                className="icon"
+            >
                 <BsThreeDotsVertical />
             </span>
-            {showMenu && (
-                <Menu
-                    backDropZIndex={100}
-                    pos={{ x: 40, y: 70 }}
-                    kill={() => setShowMenu(false)}
-                >
+            {showMenu && isNavMenuOpen && (
+                <Menu pos={{ x: 40, y: 70 }} kill={() => setShowMenu(false)}>
                     <>
                         {Navs.map((data, index) => {
                             return (

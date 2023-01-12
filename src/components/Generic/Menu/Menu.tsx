@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 
 interface props {
@@ -10,7 +10,7 @@ interface props {
     forMobile?: boolean;
     kill: () => void;
     children: any;
-    backDropZIndex?: number;
+
     animationOrigin?: string;
     align?: "left" | "right";
     bg?: string;
@@ -19,13 +19,17 @@ interface props {
 function Menu(props: props) {
     const { children, kill, align, animationOrigin, bg } = props;
     const style = props.style || {};
-    const backDropZIndex = props.backDropZIndex || 6;
-    const MenuZIndex = backDropZIndex + 2;
+    // const backDropZIndex = props.backDropZIndex || 6;
+    // const MenuZIndex = backDropZIndex + 2;
 
     var pos = props.pos;
     const { Backdrop, MenuUi } = components;
     const [anim, setAnim] = useState("navMenuShowAnim 0.13s linear");
     const ref = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        ref.current?.focus();
+    }, []);
 
     const onKill = () => {
         setAnim("navMenuHideAnim 0.13s linear");
@@ -39,24 +43,30 @@ function Menu(props: props) {
             ? { right: `${pos.x}px`, top: `${pos.y}px` }
             : { left: `${pos.x}px`, top: `${pos.y}px` };
 
+    const onBlur = () => {
+        onKill();
+    };
+
     return (
         <>
-            <Backdrop
+            {/* <Backdrop
                 style={{ position: "fixed", zIndex: backDropZIndex }}
                 onClick={onKill}
                 onContextMenu={onKill}
-            />
+            /> */}
             <MenuUi
+                onBlur={onBlur}
+                tabIndex={0}
                 ref={ref}
                 style={{
                     ...style,
                     ...__a(),
-                    position: "absolute",
+                    position: "fixed",
                     transformOrigin:
                         animationOrigin === undefined
                             ? "top right"
                             : animationOrigin,
-                    zIndex: MenuZIndex,
+                    zIndex: 125,
                     backgroundColor: bg !== undefined ? bg : "#222222",
                 }}
                 anim={anim}
@@ -126,6 +136,8 @@ const components = {
             }
         }
 
+        outline: none !important;
+
         > li {
             transition: 0.1s all ease;
             list-style-type: none;
@@ -142,6 +154,17 @@ const components = {
                 background-color: var(--bg-accent);
             }
             /* border: 1px solid white; */
+
+            // ! some exta tweaks for better customization
+            display: flex;
+            /* gap: 1rem; */
+            > span.icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.3rem;
+                margin-right: 1rem;
+            }
         }
         > li.red:hover {
             background-color: #a1212153;

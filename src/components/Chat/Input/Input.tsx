@@ -5,19 +5,37 @@ import { CgAdd } from "react-icons/cg";
 import Intel from "./Intel/Intel";
 import AttachmentMenu from "./AttachmentMenu/AttachmentMenu";
 import Menu from "../../Generic/Menu/Menu";
+import Reply from "./Reply/Reply";
 
 interface props {
+    ReceiverUsername: string;
     _keyPress: string | null;
+    setOpenTextCommand: () => void;
+    isTextCommandOpen: boolean;
+    reply: { text: string; dir: "left" | "right" } | null;
+    onDeselectReply: () => void;
+    killReply: () => void;
+    setIsTyping: (val: boolean) => void;
 }
 
 function Input(props: props) {
     const { Container, Main, Input, Send, Command, CommandsContainer } =
         components;
     const InpRef = useRef<HTMLInputElement | null>(null);
-    const { _keyPress } = props;
+    const {
+        _keyPress,
+        setOpenTextCommand,
+        isTextCommandOpen,
+        setIsTyping,
+        onDeselectReply,
+        reply,
+        killReply,
+        ReceiverUsername,
+    } = props;
     const [text, setText] = useState("");
     const [showCommands, setShowCommands] = useState(false);
     const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+    const [searchTimeout, setSearchTimeout] = useState<any>();
 
     const [textCommands, setTextCommands] = useState<Array<string> | null>(
         null
@@ -34,10 +52,9 @@ function Input(props: props) {
     useEffect(() => onKeyPress(_keyPress), [_keyPress]);
 
     const onKeyPress = (key: string | null) => {
-        if (key === "Tab") {
-        }
         if (text.startsWith("/")) {
             setShowCommands(true);
+            setOpenTextCommand(); // for the parent -> Chat
         }
     };
 
@@ -57,12 +74,14 @@ function Input(props: props) {
         if (key === "Tab" || key === "ArrowUp" || key === "ArrowDown") {
             e.preventDefault();
         }
+        // removing the textCommand
         if (
             key === "Backspace" &&
             text.trim() === "" &&
             textCommands !== null
         ) {
-            // textCommands.pop();
+            textCommands.pop();
+            setTextCommands(textCommands);
         }
     };
 
@@ -78,12 +97,17 @@ function Input(props: props) {
                 <main>
                     {textCommands &&
                         textCommands.map((data, index) => {
-                            return <Command key={index}>{data}</Command>;
+                            return (
+                                <Command nsfw={data === "nsfw"} key={index}>
+                                    {data}
+                                </Command>
+                            );
                         })}
                 </main>
             </CommandsContainer>
-            {showCommands && (
+            {showCommands && isTextCommandOpen && (
                 <Intel
+                    ExistingCommands={textCommands}
                     isGrp={false}
                     _keyPress={_keyPress}
                     showIntel={showCommands}
@@ -92,10 +116,18 @@ function Input(props: props) {
                     setTextFilter={setCommand}
                 />
             )}
+            {reply && (
+                <Reply
+                    ReceiverUsername={ReceiverUsername}
+                    kill={() => killReply()}
+                    data={reply}
+                />
+            )}
             {showAttachmentMenu && (
                 <AttachmentMenu kill={() => setShowAttachmentMenu(false)} />
             )}
             <Main
+                isReplyView={reply !== null}
                 onFocus={onFocus}
                 onFocusCapture={onFocus}
                 className="flex"
@@ -155,7 +187,7 @@ const components = {
             gap: 0.5rem;
         }
     `,
-    Command: styled.div`
+    Command: styled.div<{ nsfw?: boolean }>`
         /* width: %; */
         border: 2px solid white;
         padding: 0.2rem 2rem;
@@ -164,17 +196,33 @@ const components = {
         cursor: default;
         user-select: none;
         background-color: #1b1b1b;
-        border: 2px solid #373636;
+        border: 2px solid
+            ${(props) => (props.nsfw === true ? "#ff000089" : "#373636")};
         box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
+        ::after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 0px;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: ${(props) =>
+                props.nsfw === true ? "#ff000032" : ""};
+        }
     `,
 
-    Main: styled.div`
+    Main: styled.div<{ isReplyView: boolean }>`
         background-color: #1b1b1b;
         width: 70%;
         padding: 0.25em 1.3rem;
-        border-radius: 7px;
+
         box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
         border: 2px solid #373636;
+        border-top: ${(props) => (props.isReplyView ? "none" : "")};
+        border-radius: ${(props) =>
+            props.isReplyView ? "0 0 12px 12px" : "12px"};
 
         outline: none !important;
         /* border: none !important; */

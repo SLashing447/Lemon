@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChatData } from "../../types/Chat";
 import _Contact from "../../types/_Contact";
@@ -22,7 +22,21 @@ function Chat(props: props) {
     const [shrink, setShrink] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
 
-    const onShrikChat = () => {
+    const [isNavMenuOpen, setNavMenuOpen] = useState(false);
+    const [isTextCommandOpen, setOpenTextCommand] = useState(false);
+
+    // if the user is typing
+    const [isTyping, setIsTyping] = useState(false);
+
+    const Receiver = "Rain Wilson";
+
+    // reply state
+    const [reply, setReply] = useState<{
+        text: string;
+        dir: "left" | "right";
+    } | null>(null);
+
+    const onShrinkChat = () => {
         setShrink(true);
         setShowProfile(true);
     };
@@ -30,6 +44,39 @@ function Chat(props: props) {
         setShrink(false);
         setShowProfile(false);
     };
+
+    useEffect(() => {
+        onKeyPress(_keyPress);
+    }, [_keyPress]);
+
+    const onKeyPress = (key: string | null) => {
+        if (key === "Escape") {
+            if (isNavMenuOpen) {
+                setNavMenuOpen(false);
+                return;
+            }
+            if (reply) {
+                setReply(null);
+                return;
+            }
+            if (shrink) {
+                onExpandChat();
+                return;
+            }
+            if (isTextCommandOpen) {
+                setOpenTextCommand(false);
+                return;
+            }
+            onChatExit();
+        }
+    };
+
+    const onMessage = (data: any) => {};
+
+    const onReply = (data: { text: string; dir: "left" | "right" }) => {
+        setReply(data);
+    };
+    const onDeselectReply = () => {};
 
     return (
         <>
@@ -45,12 +92,26 @@ function Chat(props: props) {
                         <Main shrink={shrink}>
                             <ChatBackground />
                             <Nav
-                                onClick={onShrikChat}
+                                setNavMenuOpen={() => setNavMenuOpen(true)}
+                                isNavMenuOpen={isNavMenuOpen}
+                                onClick={onShrinkChat}
                                 onExit={onChatExit}
                                 data={data}
+                                isTyping={isTyping}
                             />
-                            <Screen />
-                            <Input _keyPress={_keyPress} />
+                            <Screen onReply={onReply} />
+                            <Input
+                                ReceiverUsername={Receiver}
+                                setIsTyping={setIsTyping}
+                                isTextCommandOpen={isTextCommandOpen}
+                                setOpenTextCommand={() =>
+                                    setOpenTextCommand(true)
+                                }
+                                onDeselectReply={onDeselectReply}
+                                reply={reply}
+                                killReply={() => setReply(null)}
+                                _keyPress={_keyPress}
+                            />
                         </Main>
                         {showProfile && (
                             <Profile onExit={onExpandChat} type="chat" />

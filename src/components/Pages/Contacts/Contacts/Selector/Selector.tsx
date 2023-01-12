@@ -41,8 +41,6 @@ function Selector(props: selectors) {
         null
     );
 
-    console.log("Contact id : ", index, "isSelected : ", isSelected);
-
     const onContextMenu = (e: any) => {
         e.preventDefault();
         // const bnds = e.target.getBoundingClientRect();
@@ -103,7 +101,7 @@ function Selector(props: selectors) {
                 <Image className="flex flexCenter">
                     <img src={photoURL} />
                 </Image>
-                <Data className="flex flexCenter">
+                <Data className="flex col">
                     <div className="username">{username}</div>
                     {update && <div className="update">{update}</div>}
                 </Data>
@@ -158,7 +156,7 @@ const components = {
         border: none !important;
 
         :active {
-            scale: 0.995;
+            transform: translateY(2px);
         }
 
         :hover {
@@ -176,9 +174,15 @@ const components = {
         padding-right: 1rem;
     `,
     Data: styled.div`
+        justify-content: center;
         > div.username {
             font-weight: bold;
             font-size: 1.1rem;
+        }
+        > div.update {
+            /* font-weight: bold; */
+            font-size: 0.91rem;
+            color: #a8a8a8;
         }
     `,
 };

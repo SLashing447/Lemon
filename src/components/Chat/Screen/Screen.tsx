@@ -19,9 +19,15 @@ function useMessages() {
     return { messages, isLoading, error };
 }
 
-function Screen() {
+interface props {
+    onReply: (data: { text: string; dir: "left" | "right" }) => void;
+}
+
+function Screen(props: props) {
     const { Container, Main, DateTime } = components;
     const { messages } = useMessages();
+    const { onReply } = props;
+    const [disableScrl, setDisableScrl] = useState(false); // disable scroll for speech menu
 
     const getSpeechPadding = (index: number, uid: string) => {
         if (!messages) return;
@@ -53,8 +59,8 @@ function Screen() {
     };
 
     return (
-        <Container className="flex flexCenter">
-            <Main tabIndex={-1}>
+        <Container disableScroll={disableScrl} className="flex flexCenter">
+            <Main onContextMenu={(e) => e.preventDefault()} tabIndex={-1}>
                 {messages ? (
                     messages.map((data, index) => {
                         const { uid } = data;
@@ -74,8 +80,10 @@ function Screen() {
                                 )}
 
                                 <Speech
+                                    onReply={onReply}
                                     key={index}
                                     index={index}
+                                    setDisableScroll={setDisableScrl}
                                     msg={data}
                                     pad={padding}
                                 />
@@ -90,12 +98,13 @@ function Screen() {
     );
 }
 const components = {
-    Container: styled.div`
+    Container: styled.div<{ disableScroll: boolean }>`
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
-        overflow: auto;
+        overflow: ${(props) => (props.disableScroll ? "hidden" : "auto")};
+        scrollbar-width: none;
         /* scrollbar-width: none; */
         /* background-color: var(--bar2-bg); */
         position: relative;
@@ -106,8 +115,8 @@ const components = {
         height: 100%;
         /* border: 1px solid white; */
         padding: 1rem 2rem;
-        overflow: auto;
-        scrollbar-width: none;
+        /* overflow: auto; */
+
         position: relative;
 
         //n mobile setiings
@@ -129,6 +138,7 @@ const components = {
         top: 7px;
         z-index: 2;
         user-select: none;
+        pointer-events:none;
         cursor: default;
         @keyframes DatePopAnim {
             from {
