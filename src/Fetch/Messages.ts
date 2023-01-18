@@ -5,76 +5,23 @@ import _Message from "../types/_Message";
 const date = new Date();
 const Messages: _Message[] = [
     {
+        data: { text: "hello 👋👋" },
+        time: "12:10 AM",
         uid: "123.me",
-        time: "12:31 PM",
-        data: "Hiiiii 👋",
-        date: "12/18/2022",
+        date: "1/18/2023",
     },
     {
+        data: { text: "hiii 👋👋" },
+        time: "12:11 AM",
         uid: "123.they",
-        time: "12:31 PM",
-        data: "Hello 👋",
-        date: "12/18/2022",
+        date: "1/18/2023",
     },
-    // {
-    //     uid: "123.her",
-    //     time: "12:31 PM",
-    //     reply: "Aishik@Hello 👋",
-    //     data: "Hii",
-    //     date: "12/18/2022",
-    // },
     {
+        data: { text: "sup !" },
+        time: "12:12 AM",
         uid: "123.me",
-        time: "12:31 PM",
-        data: "iuyq wgdiqu deqwiuof gqweiuof gqweiufo gwqefiu weqf eqwiuf weiuf gweqiouf gewiufg weqiuof qweiuof gewqiuofg eqwiuf weqiuf wequfi wfiu gwefiuoewg feiquwgf weqiufg ewiuf ewuifg ewqiufg weqiuofg eqwiouf gwequiof gweqfiug weqiuf gweqiufg ewqf we wqeuif weq gwqeiuf gwqefiu wegqfiuog eqwfg eqwufiog wqefiuog eqwufiog wqeiufgeqw iuf gwfiuewg fuiweqg weiufg weuiofgg wequiof gqwefiu gwe",
-        date: "12/18/2022",
-        // spoiler: true,
+        date: "1/18/2023",
     },
-    // {
-    //     uid: "123.me",
-    //     time: "12:31 PM",
-    //     data: "Hello 👋",
-    //     date: "12/18/2022",
-    // },
-    // {
-    //     uid: "123.her",
-    //     time: "12:31 PM",
-    //     reply: "Aishik@Hello 👋 iuyq wgdiqu deqwiuof gqweiuof gqweiufo gwqefiu weqf eqwiuf weiuf gweqiouf gewiufg weqiuof qweiuof gewqiuofg eqwiuf weqiuf wequfi wfiu gwefiuoewg feiquwgf weqiufg ewiuf ewuifg ewqiufg weqiuofg eqwiouf gwequiof gweqfiug weqiuf gweqiufg ewqf we wqeuif weq gwqeiuf gwqefiu wegqfiuog eqwfg eqwufiog wqefiuog eqwufiog wqeiufgeqw iuf gwfiuewg fuiweqg weiufg weuiofgg wequiof gqwefiu gwe",
-    //     data: "Hii",
-    //     date: "12/18/2022",
-    //     spoiler: true,
-    // },
-    // {
-    //     uid: "123.me",
-    //     time: "12:31 PM",
-    //     data: "iuyq wgdiqu deqwiuof gqweiuof gqweiufo gwqefiu weqf eqwiuf weiuf gweqiouf gewiufg weqiuof qweiuof gewqiuofg eqwiuf weqiuf wequfi wfiu gwefiuoewg feiquwgf weqiufg ewiuf ewuifg ewqiufg weqiuofg eqwiouf gwequiof gweqfiug weqiuf gweqiufg ewqf we wqeuif weq gwqeiuf gwqefiu wegqfiuog eqwfg eqwufiog wqefiuog eqwufiog wqeiufgeqw iuf gwfiuewg fuiweqg weiufg weuiofgg wequiof gqwefiu gwe",
-    //     date: "12/18/2022",
-    // },
-    // {
-    //     uid: "123.me",
-    //     time: "12:31 PM",
-    //     data: "Hello 👋",
-    //     date: "12/18/2022",
-    // },
-    // {
-    //     uid: "123.her",
-    //     time: "12:31 PM",
-    //     reply: "Aishik@Hello 👋",
-    //     data: "Hii",
-    //     date: "12/18/2022",
-    // },
-    {
-        uid: "123.me",
-        time: "12:31 PM",
-        data: " -#$#%#- https://i.ytimg.com/vi/_ZTiUEZbKOE/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA-CHTzKTgqBl1jiKWW0BirbSUu4Q",
-        date: "12/18/2022",
-    },
-    // {
-    //     uid: "123.me",
-    //     time: "12:31 PM",
-    //     data: "iuyq wgdiqu deqwiuof gqweiuof gqweiufo gwqefiu weqf eqwiuf weiuf gweqiouf gewiufg weqiuof qweiuof gewqiuofg eqwiuf weqiuf wequfi wfiu gwefiuoewg feiquwgf weqiufg ewiuf ewuifg ewqiufg weqiuofg eqwiouf gwequiof gweqfiug weqiuf gweqiufg ewqf we wqeuif weq gwqeiuf gwqefiu wegqfiuog eqwfg eqwufiog wqefiuog eqwufiog wqeiufgeqw iuf gwfiuewg fuiweqg weiufg weuiofgg wequiof gqwefiu gwe",
-    //     date: "12/18/2022",
-    // },
 ];
 
 export default function getMessages(): Promise<_Message[]> {

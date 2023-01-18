@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import Speech from "../../Speech/Speech";
 import { BsReplyAllFill } from "react-icons/Bs";
+import { FcStackOfPhotos } from "react-icons/fc";
+import { HiOutlinePhoto } from "react-icons/hi2";
 
 interface props {
     data: { text: string; dir: "left" | "right" };
@@ -33,7 +35,13 @@ function Reply(props: props) {
                 </Icon>
                 <main className="flex col">
                     <div className="head">{ReceiverUsername}</div>
-                    <div className="text">{text}</div>
+                    <div className="text">
+                        {text === "" ? (
+                            <HiOutlinePhoto className="icon" />
+                        ) : (
+                            text
+                        )}
+                    </div>
                 </main>{" "}
             </div>
             <Icon
@@ -109,7 +117,9 @@ const components = {
 
             width: 100%;
         }
-
+        > div > main > div > .icon {
+            font-size: 1.5rem;
+        }
         @keyframes showReplyAnim {
             from {
                 opacity: 0;

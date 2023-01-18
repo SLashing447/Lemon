@@ -47,12 +47,12 @@ function Speech(props: props) {
     const [isSpoiler, setSpoiler] = useState(spoiler);
     const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
 
-    const { Message, MessageBody, OtherInfo, Main, Reply, Image } = components;
+    const { Message, MessageBody, Main, Reply, Image, ImagePreveiwContainer } =
+        components;
 
     const myUserId = "123.me";
 
-    const text = data.split(SEPERATOR)[0];
-    const photoURL = data.split(SEPERATOR)[1];
+    const { text, photoURL } = data;
 
     // const [menu, setViewInfoPannel] = useState(false);
 
@@ -65,12 +65,19 @@ function Speech(props: props) {
     const msgKey = `${uid}-${index}-${dir}`;
 
     // ! some tweaks
-    const ref = useRef<HTMLDivElement>(null);
-    const [height, setHeight] = useState(0);
+    const ref = useRef<HTMLDivElement | null>(null);
+    const imageRef = useRef<HTMLImageElement | null>(null);
+    const [msgHeight, setMsgHeight] = useState(0);
+    const [msgImageHeight, setMsgImageHeight] = useState(0);
     useLayoutEffect(() => {
-        if (ref.current) setHeight(ref.current.clientHeight);
+        if (imageRef.current) {
+            // console.log(imageRef.current.width);
+            setMsgImageHeight(imageRef.current.clientWidth);
+        }
+        if (ref.current) setMsgHeight(ref.current.clientHeight);
     }, []);
 
+    console.log("msgHeight", msgHeight);
     // ! on Msg Click
     const onMsgClick = () => {
         if (spoiler) setSpoiler(false);
@@ -140,32 +147,70 @@ function Speech(props: props) {
         onMenuKill();
     };
 
+    const getPadding = () => {
+        let t = "0.6rem";
+        let r = "5rem";
+        let b = "0.6rem";
+        let l = "0.8rem";
+
+        if (msgHeight > 100 && photoURL === undefined) {
+            r = "1rem";
+            b = "1.2rem";
+        }
+        if (photoURL !== undefined) {
+            t = "0.4rem";
+            r = "0.4rem";
+            b = "0.4rem";
+            l = "0.4rem";
+        }
+        if (photoURL !== undefined && text !== "") {
+            r = "0.6rem";
+            b = "1.5rem";
+        }
+        return `${t} ${r} ${b} ${l}`;
+    };
+
     // const getRefinedText = () => {
     //     if(spoiler)
 
     // };
 
-    console.log(text, height, height > 100);
+    const getImage = () => {
+        if (photoURL !== undefined && text.trim() !== "") {
+            if (text.length < 100) {
+                return <Image loading="lazy" src={photoURL} />;
+            } else {
+                return (
+                    <ImagePreveiwContainer>
+                        <img loading="lazy" src={photoURL} alt="" />
+                        <div className="data flex col">
+                            <div className="image-name">Sample_Img.jpg</div>
+                            <div className="image-size">100 kb</div>
+                        </div>
+                    </ImagePreveiwContainer>
+                );
+            }
+        } else if (photoURL !== undefined && text.trim() === "") {
+            return <Image src={photoURL} />;
+        }
+        return <></>;
+    };
 
     return (
         <Message
-            // onContextMenu={(e) => e.preventDefault()}
             dir={dir}
-            imagePadding={photoURL !== ""}
             aria-details={pad}
             selected={menu !== null}
             onContextMenu={onContextMenu}
         >
-            {" "}
             {menu && (
                 <Menu
                     pos={menu}
-                    // bg="red"
                     forMobile={true}
-                    // animationOrigin="top right"
                     align="left"
                     animationOrigin="top left"
                     kill={onMenuKill}
+                    position="fixed"
                 >
                     <>
                         {MenuFuncs.map((data, index) => {
@@ -184,11 +229,7 @@ function Speech(props: props) {
                     </>
                 </Menu>
             )}
-            <Main
-                dir={dir}
-                // onContextMenu={onContextMenu}
-                className="flex col"
-            >
+            <Main dir={dir} className="flex col">
                 {" "}
                 {reply && (
                     <>
@@ -206,22 +247,30 @@ function Speech(props: props) {
                     ref={ref}
                     spoiler={isSpoiler}
                     dir={dir}
-                    imagePadding={photoURL !== ""}
+                    padding={getPadding()} // IDK but it works this way
                     uiData={pad}
-                    style={isDummy ? { width: "100%" } : {}}
+                    style={msgImageHeight ? { width: msgImageHeight } : {}}
                     tabIndex={0}
-                    expandForTimeStamp={height > 100}
-                    // className={`body${ ? " expand" : ""}`}
+                    className={
+                        photoURL !== undefined ? "flex flexCenter col" : ""
+                    }
                 >
-                    {isSpoiler && <span className="spoiler flex flexCenter" />}
-                    {text ? (
-                        <p>
-                            {isSpoiler ? "You dont Want to know this :D" : text}
-                        </p>
-                    ) : (
-                        <Image draggable={false} src={photoURL} />
+                    {isSpoiler && (
+                        <span className={`spoiler flex flexCenter`} />
                     )}
-                    <span className="time">{time}</span>
+                    {getImage()}
+                    <p>{isSpoiler ? "You dont Want to know this :D" : text}</p>
+
+                    <span
+                        className={`time${
+                            photoURL !== undefined ? " photo" : ""
+                        }`}
+                        style={{
+                            color: "white",
+                        }}
+                    >
+                        {time}
+                    </span>
                 </MessageBody>
             </Main>
         </Message>
@@ -229,6 +278,33 @@ function Speech(props: props) {
 }
 
 const components = {
+    ImagePreveiwContainer: styled.div`
+        /* border: 1px solid white; */
+        border-radius: 10px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0.25rem 1rem;
+        gap: 0.51rem;
+        box-shadow: inset 0 0 0.1rem black;
+
+        > div.data {
+            justify-content: center;
+            width: 100%;
+            /* color: red; */
+            /* border: 1px solid lime; */
+            > div.image-name {
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+        }
+
+        > img {
+            width: 10%;
+            border: 2px solid grey;
+            border-radius: 5px;
+        }
+    `,
     Reply: styled.div<{ dir: "right" | "left" }>`
         /* width: 100%; */
         /* me; border-left: 2px solid li */
@@ -263,20 +339,12 @@ const components = {
     `,
     Image: styled.img`
         width: 100%;
+        border-radius: 7px;
     `,
-    OtherInfo: styled.span`
-        /* border: 1px solid white; */
-        /* justify-content: left; */
-        cursor: pointer;
-        position: absolute;
 
-        bottom: 0;
-        right: 0;
-    `,
     Message: styled.div<{
         dir: "right" | "left";
         selected?: boolean;
-        imagePadding: boolean;
     }>`
         width: 100%;
         /* border: 1px solid white; */
@@ -329,14 +397,13 @@ const components = {
         uiData: string;
         dir: "left" | "right";
         spoiler?: boolean;
-        imagePadding: boolean;
-        expandForTimeStamp: boolean;
+        padding: string;
     }>`
         position: relative;
         /* border: 2px solid white; */
         transition: 0.14s all ease;
         :focus-within {
-            scale: 1.01;
+            scale: 1.0000001;
             background-color: ${(props) =>
                 props.dir === "left"
                     ? "var(--msg-spch-left-h)"
@@ -401,14 +468,21 @@ const components = {
             border-radius: 7px;
         }
         > p {
+            width: 100%;
             color: ${(props) => (props.spoiler ? "grey" : "")};
         }
 
         > span.time {
             position: absolute;
             font-size: 0.81rem;
+            mix-blend-mode: difference;
             bottom: 2px;
             right: 7px;
+        }
+        > span.photo.time {
+            /* color: black; */
+            bottom: 6px;
+            right: 10px;
         }
         > span.spoiler {
             position: absolute;
@@ -429,21 +503,7 @@ const components = {
             cursor: pointer;
             backdrop-filter: blur(5px);
         }
-
-        padding-right: ${(props) =>
-            props.expandForTimeStamp
-                ? "1.65rem"
-                : props.imagePadding
-                ? "0.25rem"
-                : "0.6rem"};
-        padding-left: ${(props) => (props.imagePadding ? "0.25rem" : "0.6rem")};
-        padding-top: 0.6rem;
-        padding-bottom: ${(props) =>
-            props.expandForTimeStamp
-                ? "1.65rem"
-                : props.imagePadding
-                ? "0.25rem"
-                : "0.6rem"};
+        padding: ${(props) => props.padding};
     `,
 };
 export default Speech;

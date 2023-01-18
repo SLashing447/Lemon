@@ -14,16 +14,18 @@ interface props {
     animationOrigin?: string;
     align?: "left" | "right";
     bg?: string;
+    position?: "fixed" | "absolute";
 }
 
 function Menu(props: props) {
     const { children, kill, align, animationOrigin, bg } = props;
     const style = props.style || {};
+    const position = props.position || "absolute";
     // const backDropZIndex = props.backDropZIndex || 6;
     // const MenuZIndex = backDropZIndex + 2;
 
     var pos = props.pos;
-    const { Backdrop, MenuUi } = components;
+    const { MenuUi } = components;
     const [anim, setAnim] = useState("navMenuShowAnim 0.13s linear");
     const ref = useRef<HTMLDivElement | null>(null);
 
@@ -61,7 +63,7 @@ function Menu(props: props) {
                 style={{
                     ...style,
                     ...__a(),
-                    position: "fixed",
+                    position: position,
                     transformOrigin:
                         animationOrigin === undefined
                             ? "top right"
@@ -80,13 +82,6 @@ function Menu(props: props) {
 }
 
 const components = {
-    Backdrop: styled.div`
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-    `,
     MenuUi: styled.div<{
         pos: { x: number; y: number };
         anim: string;

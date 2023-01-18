@@ -35,7 +35,7 @@ function Input(props: props) {
     const [text, setText] = useState("");
     const [showCommands, setShowCommands] = useState(false);
     const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
-    const [searchTimeout, setSearchTimeout] = useState<any>();
+    // const [searchTimeout, setSearchTimeout] = useState<any>();
 
     const [textCommands, setTextCommands] = useState<Array<string> | null>(
         null
@@ -49,7 +49,10 @@ function Input(props: props) {
         setText(e.target.value);
     };
 
-    useEffect(() => onKeyPress(_keyPress), [_keyPress]);
+    useEffect(() => {
+        onFocus();
+        onKeyPress(_keyPress);
+    }, [_keyPress]);
 
     const onKeyPress = (key: string | null) => {
         if (text.startsWith("/")) {

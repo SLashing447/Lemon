@@ -109,6 +109,7 @@ const components = {
     Form: styled.div`
         padding: 0 2rem;
         gap: 1rem;
+        max-width: 314px;
         /* border: 1px solid white; */
         > .prompt {
             width: 100%;

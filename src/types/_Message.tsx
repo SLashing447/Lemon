@@ -1,5 +1,5 @@
 export default interface _Message {
-    data: string;
+    data: { photoURL?: string; text: string };
     time: string;
     uid: string;
     reply?: string;
