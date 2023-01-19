@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ChatData } from "../../types/Chat";
 import _Contact from "../../types/_Contact";
 import Chat from "../Chat/Chat";
-import Pages from "../Pages/Pages";
+import { Pages } from "../Pages/Pages";
 import Profile from "../Pages/Profile/Profile";
 
 function Main() {

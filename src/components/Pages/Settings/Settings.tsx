@@ -8,73 +8,63 @@ import ProfileSettings from "./ProfileSettings/ProfileSettings";
 import ThemeSettings from "./ThemeSettings/ThemeSettings";
 
 interface Props {
-    updateRoute: (newRoute: string) => void;
+    setRoute: (newRoute: string) => void;
     route: string;
 }
 
 function Settings(props: Props) {
     const { Container, Card } = components;
-    const { updateRoute, route } = props;
+    const { setRoute } = props;
 
     const go = (i: string) => {
-        updateRoute(i);
+        setRoute(i);
     };
     const IconFontSize = "1.36rem";
 
     return (
         <Container className="flex col">
-            {route === "Settings" && (
-                <>
-                    <Card onClick={() => go("Profile")} interactice>
-                        <h3 style={{ gap: "1rem" }} className="flex">
-                            <span
-                                style={{ fontSize: IconFontSize }}
-                                className="icon flex flexCenter"
-                            >
-                                <RiUserSettingsFill />
-                            </span>{" "}
-                            <span className="icon flex flexCenter">
-                                {" "}
-                                Profile Settings
-                            </span>
-                        </h3>
-                    </Card>{" "}
-                    <Card onClick={() => go("Chat")} interactice>
-                        <h3 style={{ gap: "1rem" }} className="flex">
-                            <span
-                                style={{ fontSize: IconFontSize }}
-                                className="icon flex flexCenter"
-                            >
-                                <RiChatSettingsFill />
-                            </span>{" "}
-                            <span className="text flex flexCenter">
-                                {" "}
-                                Chat Settings
-                            </span>{" "}
-                        </h3>
-                    </Card>
-                    <Card onClick={() => go("Theme")} interactice>
-                        <h3 className="flex" style={{ gap: "1rem" }}>
+            <>
+                <Card onClick={() => go("Profile")} interactice>
+                    <h3 style={{ gap: "1rem" }} className="flex">
+                        <span
+                            style={{ fontSize: IconFontSize }}
+                            className="icon flex flexCenter"
+                        >
+                            <RiUserSettingsFill />
+                        </span>{" "}
+                        <span className="icon flex flexCenter">
                             {" "}
-                            <span
-                                style={{ fontSize: IconFontSize }}
-                                className="icon flex flexCenter"
-                            >
-                                <FaPaintBrush />
-                            </span>
-                            <span className="text flex flexCenter">
-                                {" "}
-                                Themes
-                            </span>
-                        </h3>
-                    </Card>
-                </>
-            )}
-            {route.includes("Chat") && (
-                <ChatSettings updateRoute={updateRoute} route={route} />
-            )}
-            {route.endsWith("Theme") && <ThemeSettings />}
-            {route.endsWith("Profile") && <ProfileSettings />}
+                            Profile Settings
+                        </span>
+                    </h3>
+                </Card>{" "}
+                <Card onClick={() => go("Chat")} interactice>
+                    <h3 style={{ gap: "1rem" }} className="flex">
+                        <span
+                            style={{ fontSize: IconFontSize }}
+                            className="icon flex flexCenter"
+                        >
+                            <RiChatSettingsFill />
+                        </span>{" "}
+                        <span className="text flex flexCenter">
+                            {" "}
+                            Chat Settings
+                        </span>{" "}
+                    </h3>
+                </Card>
+                <Card onClick={() => go("Theme")} interactice>
+                    <h3 className="flex" style={{ gap: "1rem" }}>
+                        {" "}
+                        <span
+                            style={{ fontSize: IconFontSize }}
+                            className="icon flex flexCenter"
+                        >
+                            <FaPaintBrush />
+                        </span>
+                        <span className="text flex flexCenter"> Themes</span>
+                    </h3>
+                </Card>
+            </>
         </Container>
     );
 

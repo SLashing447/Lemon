@@ -8,9 +8,15 @@ import Search from "./Contacts/Search/Search";
 import Devices from "./Devices/Devices";
 import Profile from "./Profile/Profile";
 import { Settings } from "./Settings/Settings";
-import UserQuery from "./UserQuery/UserQuery";
+import UserQuery from "./Contacts/UserQuery/UserQuery";
+import ContactPage from "./Contacts/ContactPage";
+import ChatSettings from "./Settings/ChatSettings/ChatSettings";
+import ThemeSettings from "./Settings/ThemeSettings/ThemeSettings";
+import ProfileSettings from "./Settings/ProfileSettings/ProfileSettings";
+import FolderSettings from "./Settings/ChatSettings/FolderSettings";
+import DefaultThemes from "./Settings/ThemeSettings/DefaultThemes";
 
-interface ContactsPageProps {
+export interface ContactsPageProps {
     _keyPress: string | null;
     selectedChat: number;
     setSelectedChat: (val: number) => void;
@@ -22,152 +28,108 @@ interface props {
     isVisible: boolean;
 }
 
-function Pages(props: props) {
-    const ContactPageProps = props.ContactPageProps;
+export function Pages(props: props) {
+    // const  = props.ContactPageProps;
     const { Container, Header, OtherPagesContainer } = components;
-    const { isVisible } = props;
-    const [pageIndexName, setPageIndexName] = useState("chats");
-    // const [route, setRoute] = useState("/chats");
+    const { isVisible, ContactPageProps } = props;
+
+    // const [pageIndexName, setPageIndexName] = useState("chats");
+    const [route, setRoute] = useState("chats");
     const username = "Slashing_corgi";
 
-    useEffect(() => {
-        if (pageIndexName === "Profile") {
-            setPageIndexName(username);
-        }
-    }, [pageIndexName]);
+    const _updateRoute = (i: string) => {
+        console.log("route received :", i);
+        var r = route.split("/");
 
-    const onRouteUpdate = (i: string) => {
-        setPageIndexName(`${pageIndexName}/${i}`);
+        console.log("routers length = ", r.length);
+
+        if (route !== "chats" && i !== "chats") {
+            setRoute(route + "/" + i);
+        } else {
+            setRoute(i);
+        }
     };
 
-    const onBack = () => {
-        const _s = pageIndexName.split("/");
-        console.log("previos Route ", _s.join("/"));
-        _s.pop();
-        const name = _s.join("/");
-        console.log("Go To Route ", name);
+    const previousRoute = () => {
+        var r = route.split("/");
 
-        if (_s.length === 0) {
-            setPageIndexName("chats");
+        // r is always more than equal to 2 , which is default
+        if (r.length === 1) {
+            setRoute("chats");
             return;
         }
 
-        setPageIndexName(name);
+        r.pop();
+        let k = r.join("/");
+
+        setRoute(k);
     };
 
-    // On Escape go Back
+    // ! borowing keyPress variable from the ContactPage Props
+    const _keyPress = props.ContactPageProps._keyPress;
     useEffect(() => {
-        onKeyPress(props.ContactPageProps._keyPress);
-    }, [props.ContactPageProps._keyPress]);
+        if (_keyPress === "Escape") previousRoute();
+    }, [_keyPress]);
 
-    const onKeyPress = (key: string | null) => {
-        if (key === "Escape") {
-            onBack();
-        }
-    };
+    // show the header only when the Page is Not equal to Chats
 
     return (
         <Container isVisible={isVisible}>
-            {pageIndexName === "chats" && (
-                <ContactPage
-                    setPageIndexName={setPageIndexName}
-                    data={ContactPageProps}
-                />
+            {route !== "chats" && (
+                <Header className="flex flexBetween">
+                    <div
+                        onClick={previousRoute}
+                        className="icon flex flexCenter"
+                    >
+                        <IoArrowBackOutline />
+                    </div>
+                    <h3>{route}</h3>
+                    <div className="icon">
+                        <IoArrowBackOutline />
+                    </div>
+                </Header>
             )}
-            {pageIndexName !== "chats" && (
-                <>
-                    <Header className="flex flexBetween">
-                        <span onClick={onBack} className="icon">
-                            <IoArrowBackOutline className="n flex flexCenter" />
-                        </span>
-                        <h3>{pageIndexName}</h3>
-                        <span className="icon" style={{ visibility: "hidden" }}>
-                            <IoArrowBackOutline className="n flex flexCenter" />
-                        </span>
-                    </Header>
-                    <OtherPagesContainer>
-                        {pageIndexName.startsWith("Settings") && (
-                            <Settings
-                                route={pageIndexName}
-                                updateRoute={onRouteUpdate}
-                            />
-                        )}
-
-                        {pageIndexName.startsWith("Devices") && <Devices />}
-                        {!pageIndexName.startsWith("Devices") &&
-                            !pageIndexName.startsWith("Settings") && (
-                                <Profile />
-                            )}
-                    </OtherPagesContainer>
-                </>
-            )}
+            <GetPages
+                route={route}
+                setRoute={_updateRoute}
+                contactProps={ContactPageProps}
+            />
         </Container>
     );
 }
 
-interface ContactPage {
-    data: ContactsPageProps;
-    setPageIndexName: (data: string) => void;
+interface getPageProps {
+    setRoute: (data: string) => void;
+    contactProps: ContactsPageProps;
+    route: string;
 }
 
-// ! Contacts View Page (CHATS)
-function ContactPage(props: ContactPage) {
-    const { setChatData, _keyPress, selectedChat, setSelectedChat } =
-        props.data;
-    const { setPageIndexName } = props;
+function GetPages(props: getPageProps) {
+    const { contactProps, setRoute, route } = props;
 
-    const [srchView, setSrchView] = useState(false);
-    const [srchText, setSrchText] = useState("");
-    const [contacts, setContacts] = useState<Array<_Contact> | null>(null);
-    // const [selectedChat, setSelectedChat] = useState(-1);
-    // const [pageIndexName, setPageIndexName] = useState("");
-
-    // useEffect(() => {
-    //     // setSelectedChat(selChat);
-    //     console.log(selChat + "🥵🥵🥵🥵🥵");
-    // }, [selChat]);
-
-    useEffect(() => {
-        FetchContacts();
-    }, []);
-    const FetchContacts = () => getContacts().then(setContacts);
-
-    useEffect(() => onKeyPress(_keyPress), [_keyPress]);
-
-    const onKeyPress = (key: string | null) => {
-        if (key === "Escape") {
-            if (srchView) {
-                setSrchView(false);
-            }
-        }
-    };
-
-    const _setSrchText = (text: string) => {
-        setSrchText(text);
-    };
-    const onContactClick = (data: _Contact, index: number) => {
-        setSelectedChat(index);
-        setChatData(data);
-    };
-
-    return (
-        <>
-            <Search
-                _keyPress={_keyPress}
-                srchView={srchView}
-                setSrchText={_setSrchText}
-                setSrchView={setSrchView}
-                setPageIndexName={setPageIndexName}
-            />
-            <UserQuery text={srchText} visible={srchView} />
-            <Contacts
-                selected={selectedChat}
-                visible={!srchView}
-                onClick={onContactClick}
-                contacts={contacts}
-            />
-        </>
-    );
+    // Routing
+    switch (route) {
+        case "chats":
+            return <ContactPage setRoute={setRoute} data={contactProps} />;
+        case "Settings":
+            return <Settings setRoute={setRoute} route={route} />;
+        case "Settings/Chat":
+            return <ChatSettings setRoute={setRoute} route={route} />;
+        case "Settings/Chat/Folder":
+            return <FolderSettings />;
+        case "Settings/Theme":
+            return <ThemeSettings setRoute={setRoute} route={route} />;
+        case "Settings/Theme/🖼️🖼️":
+            return <DefaultThemes />;
+        case "Settings/Profile":
+            return <ProfileSettings />;
+        case "Devices":
+            return <Devices />;
+        case "Profile":
+            return <Profile />;
+        default:
+            return <ContactPage setRoute={setRoute} data={contactProps} />;
+    }
 }
 
 const components = {
@@ -197,6 +159,9 @@ const components = {
             > svg > path {
                 color: #a0a0a0;
             }
+        }
+        h3 + .icon {
+            visibility: hidden;
         }
     `,
     OtherPagesContainer: styled.div`
@@ -234,5 +199,3 @@ const components = {
         }
     `,
 };
-
-export default Pages;

@@ -183,6 +183,10 @@ const components = {
             /* font-weight: bold; */
             font-size: 0.91rem;
             color: #a8a8a8;
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
     `,
 };

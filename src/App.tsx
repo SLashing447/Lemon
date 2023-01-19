@@ -2,6 +2,7 @@ import Main from "./components/Main/Main";
 import "./style/Base/base.css";
 import "./style/Global/global.css";
 import "./style/colors/colors.css";
+import "./assets/addon/addOn.css";
 import Account from "./Account/Account";
 
 function App() {

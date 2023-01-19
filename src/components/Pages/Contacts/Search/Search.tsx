@@ -39,12 +39,11 @@ interface Search {
     setSrchText: (val: string) => void;
     srchView: boolean;
     _keyPress: string | null;
-    setPageIndexName: (data: string) => void;
+    setRoute: (data: string) => void;
 }
 
 function Search(props: Search) {
-    const { setSrchView, setSrchText, srchView, setPageIndexName, _keyPress } =
-        props;
+    const { setSrchView, setSrchText, srchView, setRoute, _keyPress } = props;
     const { Container, Input } = components;
     const inpRef = useRef<HTMLInputElement | null>(null);
     const [text, setText] = useState("");
@@ -115,9 +114,7 @@ function Search(props: Search) {
                         {Navs.map((data, index) => {
                             return (
                                 <li
-                                    onClick={() =>
-                                        setPageIndexName(Navs[index].text)
-                                    }
+                                    onClick={() => setRoute(Navs[index].text)}
                                     key={index}
                                     className={`${
                                         index === 3 ? "red " : ""

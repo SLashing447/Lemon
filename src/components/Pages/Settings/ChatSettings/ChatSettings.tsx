@@ -3,20 +3,16 @@ import { components } from "../Settings";
 import FolderSettings from "./FolderSettings";
 
 interface Props {
-    updateRoute: (newRoute: string) => void;
+    setRoute: (newRoute: string) => void;
     route: string;
 }
 
 function ChatSettings(props: Props) {
-    const { updateRoute, route } = props;
+    const { setRoute, route } = props;
     const [fontSize, setFontSize] = useState(16);
     const [roundMessage, setRoundMessage] = useState(7);
 
     const { Container, Card } = components;
-
-    const go = (i: string) => {
-        updateRoute(i);
-    };
 
     const settingCardStyle = {
         display: "flex",
@@ -57,16 +53,14 @@ function ChatSettings(props: Props) {
                             min={3}
                         />
                     </Card>
-                    <Card style={settingCardStyle}>
-                        <h3>Some Settings</h3>
+                    <Card interactice style={settingCardStyle}>
+                        <h3>Chat Background </h3>
                     </Card>
-                    <Card onClick={() => go("Folder")} interactice>
+                    <Card onClick={() => setRoute("Folder")} interactice>
                         <h3>Chat Folders</h3>
                     </Card>
                 </>
             )}
-
-            {route.endsWith("Folder") && <FolderSettings />}
         </Container>
     );
 }
