@@ -91,7 +91,12 @@ function Screen(props: props) {
                         );
                     })
                 ) : (
-                    <h2>L O A D I N G</h2>
+                    <>
+                        {" "}
+                        <div className="spinner-box">
+                            <div className="three-quarter-spinner"></div>
+                        </div>
+                    </>
                 )}
             </Main>
         </Container>
@@ -138,7 +143,7 @@ const components = {
         top: 7px;
         z-index: 2;
         user-select: none;
-        pointer-events:none;
+        pointer-events: none;
         cursor: default;
         @keyframes DatePopAnim {
             from {

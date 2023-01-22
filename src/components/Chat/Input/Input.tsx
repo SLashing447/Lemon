@@ -2,16 +2,15 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiSend } from "react-icons/bi";
 import { CgAdd } from "react-icons/cg";
-import Intel from "./Intel/Intel";
 import AttachmentMenu from "./AttachmentMenu/AttachmentMenu";
 import Menu from "../../Generic/Menu/Menu";
 import Reply from "./Reply/Reply";
+import Commands from "./Commands/Commands";
 
 interface props {
     ReceiverUsername: string;
     _keyPress: string | null;
-    setOpenTextCommand: () => void;
-    isTextCommandOpen: boolean;
+
     reply: { text: string; dir: "left" | "right" } | null;
     onDeselectReply: () => void;
     killReply: () => void;
@@ -24,8 +23,7 @@ function Input(props: props) {
     const InpRef = useRef<HTMLInputElement | null>(null);
     const {
         _keyPress,
-        setOpenTextCommand,
-        isTextCommandOpen,
+
         setIsTyping,
         onDeselectReply,
         reply,
@@ -37,9 +35,9 @@ function Input(props: props) {
     const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
     // const [searchTimeout, setSearchTimeout] = useState<any>();
 
-    const [textCommands, setTextCommands] = useState<Array<string> | null>(
-        null
-    );
+    const [textCommands, setTextCommands] = useState<Array<string>>([]);
+
+    // console.log(textCommands);
 
     const onFocus = () => {
         InpRef.current?.focus();
@@ -57,16 +55,21 @@ function Input(props: props) {
     const onKeyPress = (key: string | null) => {
         if (text.startsWith("/")) {
             setShowCommands(true);
-            setOpenTextCommand(); // for the parent -> Chat
         }
     };
 
     const setCommand = (cmd: string) => {
+        // checks if the command already exists or not , as simple as that
+        if (textCommands?.indexOf(cmd) !== -1 && textCommands !== null) {
+            return;
+        }
         if (textCommands !== null) {
             setTextCommands([...textCommands, cmd]);
         } else {
             setTextCommands([cmd]);
         }
+
+        setText("");
     };
 
     // TODO : FIX ALL THE COMMANDS  ORIENTED BUGSS ASAP 🙏🙏
@@ -83,7 +86,7 @@ function Input(props: props) {
             text.trim() === "" &&
             textCommands !== null
         ) {
-            textCommands.pop();
+            textCommands.pop(); // removing set commands on backspace
             setTextCommands(textCommands);
         }
     };
@@ -92,33 +95,30 @@ function Input(props: props) {
         setShowAttachmentMenu(true);
     };
 
-    const onKillCommand = (e: string) => {};
-
     return (
         <Container className="flex flexCenter" tabIndex={-1}>
             <CommandsContainer>
                 <main>
-                    {textCommands &&
-                        textCommands.map((data, index) => {
-                            return (
-                                <Command nsfw={data === "nsfw"} key={index}>
-                                    {data}
-                                </Command>
-                            );
-                        })}
+                    {textCommands.map((data, index) => {
+                        return (
+                            <Command nsfw={data === "nsfw"} key={index}>
+                                {data}
+                            </Command>
+                        );
+                    })}
                 </main>
             </CommandsContainer>
-            {showCommands && isTextCommandOpen && (
-                <Intel
-                    ExistingCommands={textCommands}
-                    isGrp={false}
+            {showCommands ? (
+                <Commands
+                    sendCommand={setCommand}
                     _keyPress={_keyPress}
-                    showIntel={showCommands}
-                    setShowIntel={setShowCommands}
                     text={text}
-                    setTextFilter={setCommand}
+                    kill={() => setShowCommands(false)}
                 />
+            ) : (
+                <></>
             )}
+
             {reply && (
                 <Reply
                     ReceiverUsername={ReceiverUsername}
@@ -166,7 +166,7 @@ const components = {
         /* height: 100%; */
         display: flex;
         flex-direction: column;
-        padding: 1rem;
+        padding: 1rem 0;
 
         position: relative;
         z-index: 2;
@@ -184,10 +184,21 @@ const components = {
         justify-content: center;
         align-items: center;
         > main {
-            width: 68.4%;
+            width: 70%;
             /* background-color: purple; */
             display: flex;
             gap: 0.5rem;
+
+            //n mobile setiings
+            @media screen and (max-width: 1200px) {
+                width: 75%;
+            }
+            @media screen and (max-width: 950px) {
+                width: 85%;
+            }
+            @media screen and (max-width: 700px) {
+                width: 97%;
+            }
         }
     `,
     Command: styled.div<{ nsfw?: boolean }>`

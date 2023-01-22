@@ -23,7 +23,6 @@ function Chat(props: props) {
     const [showProfile, setShowProfile] = useState(false);
 
     const [isNavMenuOpen, setNavMenuOpen] = useState(false);
-    const [isTextCommandOpen, setOpenTextCommand] = useState(false);
 
     // if the user is typing
     const [isTyping, setIsTyping] = useState(false);
@@ -63,10 +62,6 @@ function Chat(props: props) {
                 onExpandChat();
                 return;
             }
-            if (isTextCommandOpen) {
-                setOpenTextCommand(false);
-                return;
-            }
             onChatExit();
         }
     };
@@ -103,10 +98,6 @@ function Chat(props: props) {
                             <Input
                                 ReceiverUsername={Receiver}
                                 setIsTyping={setIsTyping}
-                                isTextCommandOpen={isTextCommandOpen}
-                                setOpenTextCommand={() =>
-                                    setOpenTextCommand(true)
-                                }
                                 onDeselectReply={onDeselectReply}
                                 reply={reply}
                                 killReply={() => setReply(null)}

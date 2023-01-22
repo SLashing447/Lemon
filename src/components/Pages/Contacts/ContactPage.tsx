@@ -5,6 +5,7 @@ import _Contact from "../../../types/_Contact";
 import getContacts from "../../../Fetch/Contacts";
 import { useEffect, useState } from "react";
 import { ContactsPageProps } from "../Pages";
+import Modal from "../../Generic/Modal/Modal";
 
 interface ContactPage {
     data: ContactsPageProps;
@@ -20,6 +21,7 @@ export default function ContactPage(props: ContactPage) {
     const [srchView, setSrchView] = useState(false);
     const [srchText, setSrchText] = useState("");
     const [contacts, setContacts] = useState<Array<_Contact> | null>(null);
+    const [folderCreateMoldal, setFolderCreateModal] = useState(false);
     // const [isUserQueryView, setUserQueryView] = useState(false); //
     // const [selectedChat, setSelectedChat] = useState(-1);
     // const [pageIndexName, setPageIndexName] = useState("");
@@ -52,6 +54,20 @@ export default function ContactPage(props: ContactPage) {
         setChatData(data);
     };
 
+    // Middle Man , setRoute , createFolder modal purpose
+    const _setRoute = (data: string) => {
+        if (data === "Folder") {
+            setFolderCreateModal(true);
+            return;
+        } else {
+            setRoute(data);
+        }
+    };
+
+    const killCreateFolderModal = () => {
+        setFolderCreateModal(false);
+    };
+
     return (
         <>
             <Search
@@ -59,9 +75,18 @@ export default function ContactPage(props: ContactPage) {
                 srchView={srchView}
                 setSrchText={_setSrchText}
                 setSrchView={setSrchView}
-                setRoute={setRoute}
+                setRoute={_setRoute}
             />
             <UserQuery text={srchText} visible={srchView} />
+
+            {folderCreateMoldal && (
+                <Modal kill={killCreateFolderModal}>
+                    <li>Some func</li>
+                    <li>Some func</li>
+                    <li>Some func</li>
+                    <li>Some func</li>
+                </Modal>
+            )}
 
             <Contacts
                 selected={selectedChat}

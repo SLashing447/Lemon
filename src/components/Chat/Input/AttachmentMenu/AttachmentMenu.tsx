@@ -69,10 +69,21 @@ const components = {
         background-color: transparent;
     `,
     Main: styled.div`
-        width: 68.4%;
+        width: 70%;
         height: 100%;
         background-color: transparent;
         position: relative;
+
+        //n mobile setiings
+        @media screen and (max-width: 1200px) {
+            width: 75%;
+        }
+        @media screen and (max-width: 950px) {
+            width: 85%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 97%;
+        }
     `,
 };
 

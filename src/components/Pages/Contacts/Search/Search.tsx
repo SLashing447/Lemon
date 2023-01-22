@@ -6,6 +6,7 @@ import {
     MdOutlineDevices,
     MdSearch,
 } from "react-icons/md";
+import { HiOutlineFolderAdd } from "react-icons/hi";
 import { FiMenu, FiSettings } from "react-icons/fi";
 import { IoArrowBackOutline } from "react-icons/Io5";
 import Menu from "../../../Generic/Menu/Menu";
@@ -19,6 +20,10 @@ const Navs = [
                 src={"https://randomuser.me/api/portraits/men/61.jpg"}
             />
         ),
+    },
+    {
+        text: "Folder",
+        icon: <HiOutlineFolderAdd />,
     },
     {
         text: "Settings",
@@ -96,6 +101,11 @@ function Search(props: Search) {
         }
     };
 
+    const onMenuOptionsClick = (e: string) => {
+        setShowMenu(false);
+        setRoute(e);
+    };
+
     return (
         <Container className="flex flexCenter">
             <span onClick={_showMenu} className="icon flex flexCenter">
@@ -114,10 +124,12 @@ function Search(props: Search) {
                         {Navs.map((data, index) => {
                             return (
                                 <li
-                                    onClick={() => setRoute(Navs[index].text)}
+                                    onClick={() =>
+                                        onMenuOptionsClick(data.text)
+                                    }
                                     key={index}
                                     className={`${
-                                        index === 3 ? "red " : ""
+                                        index === 4 ? "red " : ""
                                     }flex`}
                                 >
                                     <span

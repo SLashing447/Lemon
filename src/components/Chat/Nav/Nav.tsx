@@ -141,6 +141,8 @@ const components = {
                 background-color: #ffffff15;
             }
         }
+        /* box-shadow: 0 0 2rem black; */
+        /* border: 1px solid white; */
     `,
     Main: styled.div`
         position: relative;

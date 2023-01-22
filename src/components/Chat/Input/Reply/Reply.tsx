@@ -57,23 +57,18 @@ function Reply(props: props) {
 
 const components = {
     Container: styled.div<{ anim: string }>`
-        width: 68.5%;
+        width: 70%;
         animation: ${(props) => props.anim};
 
-        @media screen and (max-width: 600px) {
-            width: 89%;
-        }
+        //n mobile setiings
         @media screen and (max-width: 1200px) {
-            width: 72%;
+            width: 75%;
         }
         @media screen and (max-width: 950px) {
-            width: 81%;
+            width: 85%;
         }
         @media screen and (max-width: 700px) {
-            width: 90%;
-        }
-        @media screen and (max-width: 580px) {
-            width: 91%;
+            width: 97%;
         }
 
         position: absolute;

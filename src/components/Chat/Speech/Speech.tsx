@@ -77,7 +77,7 @@ function Speech(props: props) {
         if (ref.current) setMsgHeight(ref.current.clientHeight);
     }, []);
 
-    console.log("msgHeight", msgHeight);
+    // console.log("msgHeight", msgHeight);
     // ! on Msg Click
     const onMsgClick = () => {
         if (spoiler) setSpoiler(false);
@@ -148,9 +148,9 @@ function Speech(props: props) {
     };
 
     const getPadding = () => {
-        let t = "0.6rem";
+        let t = "0.5rem";
         let r = "5rem";
-        let b = "0.6rem";
+        let b = "0.5rem";
         let l = "0.8rem";
 
         if (msgHeight > 100 && photoURL === undefined) {

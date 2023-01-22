@@ -74,3 +74,36 @@ span.ripple {
     position: relative;
     z-index: 999;
 }
+
+input[type="radio"] {
+    /* ...existing styles */
+    /* display: none; */
+}
+
+.spinner-box {
+    /* width: 300px;
+    height: 300px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem;
+    background-color: transparent;
+}
+
+.three-quarter-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #fb5b53;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.5s linear 0s infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
