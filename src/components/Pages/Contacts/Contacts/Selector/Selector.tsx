@@ -97,9 +97,10 @@ function Selector(props: selectors) {
                 hover={menuCords !== null}
                 onClick={onSelectorClick}
                 selected={isSelected}
+                title={!update ? "" : update}
             >
                 <Image className="flex flexCenter">
-                    <img src={photoURL} />
+                    <img loading="lazy" src={photoURL} />
                 </Image>
                 <Data className="flex col">
                     <div className="username">{username}</div>
