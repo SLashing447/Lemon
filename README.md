@@ -2,7 +2,8 @@
 
 
 # Landing Page
-![alt text](![image](https://user-images.githubusercontent.com/76745298/214015177-6c77c132-5ec8-4e3a-82c0-bf8df17ded6a.png))
+https://user-images.githubusercontent.com/76745298/214015177-6c77c132-5ec8-4e3a-82c0-bf8df17ded6a.png
+
 
 # Chat Selected
 ![image](![image](https://user-images.githubusercontent.com/76745298/214015369-8d092350-7075-4bb5-815f-3ac44da29bee.png))
