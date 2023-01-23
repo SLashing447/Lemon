@@ -2,5 +2,7 @@ export default interface _Contact {
     username: string;
     photoURL: string;
     update: string | null;
-    userID: string; // userId on the database
+    UID: string; // UID on the database and exception for folder mode
+    type?: "folder";
+    parent?: string;
 }

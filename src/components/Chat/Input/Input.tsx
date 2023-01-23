@@ -10,7 +10,7 @@ import Commands from "./Commands/Commands";
 interface props {
     ReceiverUsername: string;
     _keyPress: string | null;
-
+    onSend: (data: string) => void;
     reply: { text: string; dir: "left" | "right" } | null;
     onDeselectReply: () => void;
     killReply: () => void;
@@ -23,7 +23,7 @@ function Input(props: props) {
     const InpRef = useRef<HTMLInputElement | null>(null);
     const {
         _keyPress,
-
+        onSend,
         setIsTyping,
         onDeselectReply,
         reply,
@@ -80,6 +80,10 @@ function Input(props: props) {
         if (key === "Tab" || key === "ArrowUp" || key === "ArrowDown") {
             e.preventDefault();
         }
+        if (key === "Enter") {
+            sendMessage();
+        }
+
         // removing the textCommand
         if (
             key === "Backspace" &&
@@ -95,6 +99,13 @@ function Input(props: props) {
         setShowAttachmentMenu(true);
     };
 
+    const sendMessage = () => {
+        if (text.trim() !== "") {
+            onSend(text); // -> send The Message to the parent
+            setText("");
+        }
+    };
+
     return (
         <Container className="flex flexCenter" tabIndex={-1}>
             <CommandsContainer>
@@ -108,15 +119,13 @@ function Input(props: props) {
                     })}
                 </main>
             </CommandsContainer>
-            {showCommands ? (
+            {showCommands && (
                 <Commands
                     sendCommand={setCommand}
                     _keyPress={_keyPress}
                     text={text}
                     kill={() => setShowCommands(false)}
                 />
-            ) : (
-                <></>
             )}
 
             {reply && (
@@ -152,7 +161,11 @@ function Input(props: props) {
                     placeholder="Message"
                     tabIndex={-1}
                 />
-                <Send className="flex flexCenter" tabIndex={-1}>
+                <Send
+                    onClick={sendMessage}
+                    className="flex flexCenter"
+                    tabIndex={-1}
+                >
                     <BiSend />
                 </Send>
             </Main>

@@ -53,7 +53,11 @@ function ChatSettings(props: Props) {
                             min={3}
                         />
                     </Card>
-                    <Card interactice style={settingCardStyle}>
+                    <Card
+                        onClick={() => setRoute("Background")}
+                        interactice
+                        style={settingCardStyle}
+                    >
                         <h3>Chat Background </h3>
                     </Card>
                     <Card onClick={() => setRoute("Folder")} interactice>

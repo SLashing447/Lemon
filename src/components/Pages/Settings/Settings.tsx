@@ -86,8 +86,15 @@ const components = {
         display: flex;
         /* justify-content: center; */
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 0.75rem 2rem;
         cursor: ${(props) => (props.interactice ? "pointer" : "default")};
+
+        > span.icon {
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         :hover {
             background-color: ${(props) =>

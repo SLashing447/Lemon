@@ -8,11 +8,12 @@ interface Contacts {
     visible: boolean;
     selected: number;
     contacts: Array<_Contact> | null;
+    contactRoute: string | null; // for folder routing , default is '/'
 }
 
 function Contacts(props: Contacts) {
     const { Container } = components;
-    const { contacts, onClick, visible, selected } = props;
+    const { contacts, onClick, visible, selected, contactRoute } = props;
     // const [selected, setSelected] = useState(-1);
 
     const onSelectorClick = (index: number) => {
@@ -29,15 +30,24 @@ function Contacts(props: Contacts) {
             className="flex col"
         >
             {contacts ? (
-                contacts.map((data, index) => (
-                    <Selector
-                        onClick={onSelectorClick}
-                        isSelected={selected === index}
-                        index={index}
-                        key={index}
-                        data={data}
-                    />
-                ))
+                contacts.map((data, index) => {
+                    var parent = data.parent || "/"; // every contact has a parent route
+                    // it can be base or something else
+
+                    if (contactRoute !== parent) return;
+                    // if the current route doesnot match the contact route
+                    // we dont render that contact
+
+                    return (
+                        <Selector
+                            onClick={onSelectorClick}
+                            isSelected={selected === index}
+                            index={index}
+                            key={index}
+                            data={data}
+                        />
+                    );
+                })
             ) : (
                 <> </>
             )}

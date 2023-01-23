@@ -15,6 +15,7 @@ import ThemeSettings from "./Settings/ThemeSettings/ThemeSettings";
 import ProfileSettings from "./Settings/ProfileSettings/ProfileSettings";
 import FolderSettings from "./Settings/ChatSettings/FolderSettings";
 import DefaultThemes from "./Settings/ThemeSettings/DefaultThemes";
+import Background from "./Settings/ChatSettings/Background";
 
 export interface ContactsPageProps {
     _keyPress: string | null;
@@ -38,10 +39,7 @@ export function Pages(props: props) {
     const username = "Slashing_corgi";
 
     const _updateRoute = (i: string) => {
-        console.log("route received :", i);
         var r = route.split("/");
-
-        console.log("routers length = ", r.length);
 
         if (route !== "chats" && i !== "chats") {
             setRoute(route + "/" + i);
@@ -117,6 +115,8 @@ function GetPages(props: getPageProps) {
             return <ChatSettings setRoute={setRoute} route={route} />;
         case "Settings/Chat/Folder":
             return <FolderSettings />;
+        case "Settings/Chat/Background":
+            return <Background />;
         case "Settings/Theme":
             return <ThemeSettings setRoute={setRoute} route={route} />;
         case "Settings/Theme/🖼️🖼️":

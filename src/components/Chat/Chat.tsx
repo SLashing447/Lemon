@@ -66,7 +66,9 @@ function Chat(props: props) {
         }
     };
 
-    const onMessage = (data: any) => {};
+    const onMessage = (data: any) => {
+        console.log(data);
+    };
 
     const onReply = (data: { text: string; dir: "left" | "right" }) => {
         setReply(data);
@@ -100,6 +102,7 @@ function Chat(props: props) {
                                 setIsTyping={setIsTyping}
                                 onDeselectReply={onDeselectReply}
                                 reply={reply}
+                                onSend={onMessage}
                                 killReply={() => setReply(null)}
                                 _keyPress={_keyPress}
                             />
