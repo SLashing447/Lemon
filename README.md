@@ -2,7 +2,8 @@
 
 
 # Landing Page
-https://user-images.githubusercontent.com/76745298/214015177-6c77c132-5ec8-4e3a-82c0-bf8df17ded6a.png
+![MarineGEO circle logo](https://user-images.githubusercontent.com/76745298/214015177-6c77c132-5ec8-4e3a-82c0-bf8df17ded6a.png)
+
 
 
 # Chat Selected
