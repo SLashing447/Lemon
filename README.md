@@ -2,14 +2,14 @@
 
 
 # Landing Page
-![alt text](https://user-images.githubusercontent.com/76745298/211151387-191bfe40-3e55-4358-a75e-ccea56a19e2d.png)
+![alt text](![image](https://user-images.githubusercontent.com/76745298/214015177-6c77c132-5ec8-4e3a-82c0-bf8df17ded6a.png))
 
 # Chat Selected
-![image](https://user-images.githubusercontent.com/76745298/211151453-cae50c9f-11c5-4a58-9a5e-f9da9e387c9d.png)
+![image](![image](https://user-images.githubusercontent.com/76745298/214015369-8d092350-7075-4bb5-815f-3ac44da29bee.png))
 
 
 # Mobile Support 
 
  
-![Screenshot 2023-01-07 at 18-24-34 Lemon(1)](https://user-images.githubusercontent.com/76745298/211151637-39af1733-cd5a-4fb3-877f-9c65bd3e92e0.png)
-![Screenshot 2023-01-07 at 18-23-04 Lemon(1)](https://user-images.githubusercontent.com/76745298/211151585-6497372a-4af6-4537-bf5c-1b50052d3398.png)
+![Screenshot 2023-01-07 at 18-24-34 Lemon(1)](![image](https://user-images.githubusercontent.com/76745298/214015535-f7bc0ee2-a6b7-4f32-8748-0c1700bdaac1.png))
+![Screenshot 2023-01-07 at 18-23-04 Lemon(1)](![image](https://user-images.githubusercontent.com/76745298/214015650-fdf379f1-0890-4700-9abb-c73b82ed85c0.png))
