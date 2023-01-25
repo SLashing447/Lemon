@@ -69,7 +69,8 @@ function Menu(props: props) {
                             ? "top right"
                             : animationOrigin,
                     zIndex: 125,
-                    backgroundColor: bg !== undefined ? bg : "#222222",
+                    backgroundColor:
+                        bg !== undefined ? bg : "var(--primary-bg-2)",
                 }}
                 anim={anim}
                 pos={pos}

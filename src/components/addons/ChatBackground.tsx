@@ -3,8 +3,26 @@ import styled from "styled-components";
 
 function ChatBackground() {
     const { Container } = components;
+    // special stars and clound effect on moonLight theme
+    const theme = localStorage.getItem("lemon-web-theme");
 
-    return <Container></Container>;
+    return (
+        <Container
+            style={
+                theme === "m-light"
+                    ? { background: "transparent", opacity: 1 }
+                    : {}
+            }
+        >
+            {theme === "m-light" && (
+                <>
+                    <div className="stars"></div>
+                    <div className="twinkling"></div>
+                    {/* <div className="clouds"></div> */}
+                </>
+            )}
+        </Container>
+    );
 }
 
 const components = {

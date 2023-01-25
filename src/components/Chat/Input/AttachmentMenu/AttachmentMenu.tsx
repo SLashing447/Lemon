@@ -22,7 +22,7 @@ function AttachmentMenu(props: props) {
                     align="left"
                     kill={kill}
                     style={{ border: "2px solid #404040" }}
-                    bg={"#2b2b2b"}
+                    bg={"       var(--primary-bg-1)"}
                 >
                     <>
                         <li className="flex" style={{ gap: "0.8rem" }}>

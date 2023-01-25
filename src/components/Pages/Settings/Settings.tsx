@@ -22,7 +22,7 @@ function Settings(props: Props) {
     const IconFontSize = "1.36rem";
 
     return (
-        <Container className="flex col">
+        <Container className="flex col fade-in-animation">
             <>
                 <Card onClick={() => go("Profile")} interactice>
                     <h3 style={{ gap: "1rem" }} className="flex">
@@ -80,7 +80,7 @@ const components = {
         gap: 0.7rem;
     `,
     Card: styled.div<{ interactice?: boolean }>`
-        background-color: #313131;
+        background-color: var(--primary-bg-1);
         width: 100%;
         border-radius: 7px;
         display: flex;
@@ -98,7 +98,9 @@ const components = {
 
         :hover {
             background-color: ${(props) =>
-                props.interactice ? "#3e3e3e" : "#313131"};
+                props.interactice
+                    ? "var(--primary-bg-1-h);"
+                    : "var(--primary-bg-1);"};
         }
     `,
 };

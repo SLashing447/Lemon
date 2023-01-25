@@ -41,6 +41,9 @@ function Selector(props: selectors) {
         null
     );
 
+    const newMsgsLength = update && update.split("&@&")[1];
+    const updateText = update && update.split("&@&")[0];
+
     const onContextMenu = (e: any) => {
         e.preventDefault();
         // const bnds = e.target.getBoundingClientRect();
@@ -97,15 +100,24 @@ function Selector(props: selectors) {
                 hover={menuCords !== null}
                 onClick={onSelectorClick}
                 selected={isSelected}
-                title={!update ? "" : update}
+                title={!update ? "" : !updateText ? update : updateText}
             >
                 <Image className="flex flexCenter">
                     <img loading="lazy" src={photoURL} />
                 </Image>
                 <Data className="flex col">
                     <div className="username">{username}</div>
-                    {update && <div className="update">{update}</div>}
+                    {update && (
+                        <div className="update">
+                            {updateText === undefined ? update : updateText}
+                        </div>
+                    )}
                 </Data>
+                {newMsgsLength && (
+                    <span className="newMsgsLength flex flexCenter">
+                        {newMsgsLength}
+                    </span>
+                )}
             </Container>
         </>
     );
@@ -117,8 +129,8 @@ const components = {
         position: relative;
         overflow: hidden;
         padding: 0.45rem 1rem;
-        cursor: pointer;
         margin: 0 0.5rem;
+        cursor: pointer;
         border-radius: 10px;
         transition: 0.2s all ease;
         /* @media screen and (max-width: 600px) {
@@ -145,11 +157,11 @@ const components = {
         @keyframes selShowAnim {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                /* transform: translateY(20px); */
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                /* transform: translateY(0); */
             }
         }
 
@@ -163,6 +175,30 @@ const components = {
         :hover {
             background-color: ${(props) =>
                 props.selected ? "var(--bg-accent)" : "var(--bg-accent-h)"};
+        }
+
+        // newmsgs.lenght view
+        > .newMsgsLength {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            /* background-color:  */
+            border-radius: 10px;
+            /* width: 40px;
+            height: 40px; */
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+
+            background-color: var(--bg-accent);
+            /* height: 10px; */
+        }
+
+        @media screen and (max-width: 350px) {
+            /* padding: 1rem 0.25rem; */
+            padding: 0.45rem 1rem;
+            margin: 0 0.25rem;
         }
     `,
     Image: styled.div`

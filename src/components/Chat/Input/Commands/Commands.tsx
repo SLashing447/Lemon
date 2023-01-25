@@ -156,7 +156,9 @@ function Commands(props: props) {
 const components = {
     Container: styled.div<{ animation: string }>`
         width: 70%;
-        background-color: #1b1b1b;
+        backdrop-filter: blur(10px);
+        background-color: var(--srchBar-bg);
+        border: 2px solid #2c393d;
 
         margin-bottom: 0.5rem;
 
@@ -175,7 +177,7 @@ const components = {
         }
 
         box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
-        border: 2px solid #373636;
+
         border-radius: 12px;
         padding: 0.2rem;
 
@@ -213,9 +215,9 @@ const components = {
 
         /* border: 1px solid white; */
         cursor: pointer;
-        background-color: ${(props) => (props.focus ? "#46464679" : "")};
+        background-color: ${(props) => (props.focus ? "#ffffff14" : "")};
         :hover {
-            background-color: #46464679;
+            background-color: #ffffff14;
         }
         > div {
             padding: 0.2rem;

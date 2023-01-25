@@ -6,7 +6,7 @@ function Background() {
     const { Container, Card } = components;
 
     return (
-        <Container>
+        <Container className="fade-in-animation">
             <Card style={{ gap: "1rem" }} interactice>
                 <span className="icon">
                     <MdUpload />

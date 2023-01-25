@@ -167,6 +167,11 @@ function Input(props: props) {
                     tabIndex={-1}
                 >
                     <BiSend />
+                    {/* <div className="load">
+                        <div className="one"></div>
+                        <div className="two"></div>
+                        <div className="three"></div>
+                    </div> */}
                 </Send>
             </Main>
         </Container>
@@ -201,6 +206,9 @@ const components = {
             /* background-color: purple; */
             display: flex;
             gap: 0.5rem;
+            /* border: 1px solid white; */
+            overflow: auto;
+            scrollbar-width: none;
 
             //n mobile setiings
             @media screen and (max-width: 1200px) {
@@ -222,7 +230,7 @@ const components = {
         position: relative;
         cursor: default;
         user-select: none;
-        background-color: #1b1b1b;
+        background-color: var(--primary-bg-2);
         border: 2px solid
             ${(props) => (props.nsfw === true ? "#ff000089" : "#373636")};
         box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
@@ -241,12 +249,12 @@ const components = {
     `,
 
     Main: styled.div<{ isReplyView: boolean }>`
-        background-color: #1b1b1b;
+        background-color: var(--msg-input-bg);
         width: 70%;
         padding: 0.25em 1.3rem;
 
-        box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6);
-        border: 2px solid #373636;
+        /* box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6); */
+        border: 2px solid var(--msg-input-bg-border-col);
         border-top: ${(props) => (props.isReplyView ? "none" : "")};
         border-radius: ${(props) =>
             props.isReplyView ? "0 0 12px 12px" : "12px"};

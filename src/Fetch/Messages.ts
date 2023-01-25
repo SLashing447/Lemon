@@ -83,7 +83,10 @@ const Messages: _Message[] = [
         date: "1/18/2023",
     },
     {
-        data: { text: "hiii 👋👋" },
+        data: {
+            text: "How are you !",
+        },
+        reply: "AISHIK@How are you !",
         time: "12:11 AM",
         uid: "123.they",
         date: "1/18/2023",
@@ -91,6 +94,7 @@ const Messages: _Message[] = [
     {
         data: { text: "sup !" },
         time: "12:12 AM",
+        reply: "AISHIK@How are you !",
         uid: "123.me",
         date: "1/18/2023",
     },

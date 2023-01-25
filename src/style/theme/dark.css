@@ -1,0 +1,22 @@
+/* This thing is messed up and i know that */
+:root {
+    --bg-col: rgb(37, 37, 37); /* Main 1 */
+    --font: lightgrey; /* font main 1 */
+    --nav-bg: black;
+    --msg-input-bg: rgb(27, 27, 27);
+    --msg-input-bg-border-col: rgb(38, 38, 38);
+    --bar1-bg: rgb(27, 27, 27); /* Main 2 */
+    --bar2-bg: rgba(255, 255, 255, 0);
+    --srchBar-bg: rgb(17, 17, 17); /* Main 3 */
+
+    --primary-bg-1: rgb(47, 47, 47); /* Main 4 */
+    --primary-bg-1-h: rgb(67, 66, 66);
+    /* 'h' -> means light */
+    /* primary - 1 is mainly for the cards and other still components */
+    /* primary - 2 is for dynamic components like menu and input stuffs and all */
+    --primary-bg-2: rgb(32, 32, 32); /* Main 4 */
+    --primary-bg-2-h: green;
+
+    --primary-bg-3: rgb(49, 49, 49); /*  other components colors */
+    --primary-bg-4: rgb(52, 63, 77);
+}

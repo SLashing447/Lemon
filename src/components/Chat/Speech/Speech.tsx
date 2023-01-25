@@ -149,7 +149,7 @@ function Speech(props: props) {
 
     const getPadding = () => {
         let t = "0.5rem";
-        let r = "5rem";
+        let r = "4.5rem";
         let b = "0.5rem";
         let l = "0.8rem";
 

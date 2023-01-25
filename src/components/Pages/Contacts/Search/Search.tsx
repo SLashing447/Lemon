@@ -22,10 +22,6 @@ const Navs = [
         ),
     },
     {
-        text: "Folder",
-        icon: <HiOutlineFolderAdd />,
-    },
-    {
         text: "Settings",
         icon: <FiSettings />,
     },
@@ -129,7 +125,7 @@ function Search(props: Search) {
                                     }
                                     key={index}
                                     className={`${
-                                        index === 4 ? "red " : ""
+                                        index === 3 ? "red " : ""
                                     }flex`}
                                 >
                                     <span
@@ -191,6 +187,12 @@ const components = {
                 background-color: #ffffff19;
             }
         }
+
+        // small screens
+        @media screen and (max-width: 350px) {
+            padding: 1rem 0.5rem;
+        }
+
         /* height: rem; */
         /* border: 2px solid green; */
     `,
@@ -204,6 +206,12 @@ const components = {
         transition: 0.1s all ease;
         outline: none !important;
         border: none !important;
+
+        // for small screnns <=350px
+        @media screen and (max-width: 350px) {
+            padding: 0.55rem 1rem;
+            gap: 0.5rem;
+        }
 
         box-shadow: ${(props) =>
             props.focus ? "inset 0 0 0 2px var(--bg-accent)" : "none"};
