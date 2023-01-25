@@ -18,7 +18,7 @@ interface props {
 function Chat(props: props) {
     const { Container, NoChat, Main } = components;
     const { data, _keyPress, isVisible, onChatExit } = props;
-    const dbId = data?.userID; // db Id
+    const dbId = data?.UID; // db search id for the msgs folder or somehting else idk
     const [shrink, setShrink] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
 
@@ -96,7 +96,7 @@ function Chat(props: props) {
                                 data={data}
                                 isTyping={isTyping}
                             />
-                            <Screen onReply={onReply} />
+                            <Screen onMsg={onMessage} onReply={onReply} />
                             <Input
                                 ReceiverUsername={Receiver}
                                 setIsTyping={setIsTyping}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import _setTheme from "../../theme/setTheme";
 import { ChatData } from "../../types/Chat";
 import _Contact from "../../types/_Contact";
 import Chat from "../Chat/Chat";
@@ -12,6 +13,7 @@ function Main() {
     const [_keyPress, setKeyPress] = useState<null | string>(null);
     const [showChatView, setShowChatView] = useState(false);
     const [selectedChat, setSelectedChat] = useState(-2);
+    const theme = localStorage.getItem("lemon-web-theme");
 
     // Info :
     //  This function returns two components
@@ -38,9 +40,13 @@ function Main() {
     const onChatExit = () => {
         setShowChatView(false);
         setChatData(null);
-        console.log("I AM HERE ");
         setSelectedChat(-1);
     };
+
+    // ! THEME CHANGE DETECT
+    useEffect(() => {
+        _setTheme(theme);
+    }, [theme]);
 
     return (
         <Container className="flex">

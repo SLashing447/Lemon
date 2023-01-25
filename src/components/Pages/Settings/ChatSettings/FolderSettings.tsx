@@ -7,7 +7,10 @@ function FolderSettings() {
     const { ExistingFolder, NewFolder, Icon, Text } = Components;
 
     return (
-        <components.Container className="flex col" style={{ gap: "1rem" }}>
+        <components.Container
+            className="flex col fade-in-animation"
+            style={{ gap: "1rem" }}
+        >
             <ExistingFolder>
                 <Icon className="icon">
                     <BsFillChatLeftTextFill />

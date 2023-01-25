@@ -23,7 +23,6 @@ export default function ContactPage(props: ContactPage) {
     const [srchView, setSrchView] = useState(false);
     const [srchText, setSrchText] = useState("");
     const [contacts, setContacts] = useState<Array<_Contact> | null>(null);
-    const [folderCreateMoldal, setFolderCreateModal] = useState(false);
     const [contactRoute, setContactRoute] = useState<string>("/");
 
     // const [isUserQueryView, setUserQueryView] = useState(false); //
@@ -75,16 +74,7 @@ export default function ContactPage(props: ContactPage) {
 
     // Middle Man , setRoute , createFolder modal purpose
     const _setRoute = (data: string) => {
-        if (data === "Folder") {
-            setFolderCreateModal(true);
-            return;
-        } else {
-            setRoute(data);
-        }
-    };
-
-    const killCreateFolderModal = () => {
-        setFolderCreateModal(false);
+        setRoute(data);
     };
 
     const onBackContactFolder = () => {
@@ -102,14 +92,6 @@ export default function ContactPage(props: ContactPage) {
             />
             <UserQuery text={srchText} visible={srchView} />
 
-            {folderCreateMoldal && (
-                <Modal kill={killCreateFolderModal}>
-                    <li>Some func</li>
-                    <li>Some func</li>
-                    <li>Some func</li>
-                    <li>Some func</li>
-                </Modal>
-            )}
             {contactRoute !== "/" && !srchView && (
                 <Header className="flex flexBetween">
                     <div
@@ -118,7 +100,7 @@ export default function ContactPage(props: ContactPage) {
                     >
                         <IoArrowBackOutline />
                     </div>
-                    <h2> {contactRoute}</h2>
+                    <h3> {contactRoute}</h3>
                     <div className="icon flex flexCenter">
                         <IoArrowBackOutline />
                     </div>
@@ -144,6 +126,9 @@ const Header = styled.div`
 
     animation: selShowAnim 0.2s linear;
 
+    border-bottom: 2px solid rgb(57, 57, 57);
+    padding-bottom: 1rem;
+
     > .icon {
         font-size: 1.8rem;
         /* border: 1px solid white; */
@@ -160,7 +145,7 @@ const Header = styled.div`
             color: #a0a0a0;
         }
     }
-    h2 + .icon {
+    h3 + .icon {
         visibility: hidden;
     }
 `;

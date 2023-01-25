@@ -53,6 +53,10 @@ span.ripple {
     border: 2px solid rgb(79, 79, 79);
     background-color: rgb(36, 36, 36);
 }
+.obi-th-btn {
+    border: 2px solid rgb(44, 49, 62);
+    background-color: rgb(27, 32, 43);
+}
 .light-th-btn {
     border: 2px solid rgb(186, 186, 186);
     background-color: rgb(144, 144, 144);
@@ -105,5 +109,55 @@ input[type="radio"] {
     }
     to {
         transform: rotate(359deg);
+    }
+}
+
+/* Fade in anim */
+
+.fade-in-animation {
+    animation: fadeInAnimation 0.18s linear;
+}
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* some loading aniamtion */
+
+.load {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 200px auto; */
+}
+
+.load > div {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(65, 65, 65);
+    border-radius: 50%;
+    margin: 0 2px;
+    animation-name: up-and-down;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.load .two {
+    animation-delay: 0.3s;
+}
+
+.load .three {
+    animation-delay: 0.6s;
+}
+
+@keyframes up-and-down {
+    to {
+        opacity: 0.2;
+        transform: translateY(0px);
     }
 }

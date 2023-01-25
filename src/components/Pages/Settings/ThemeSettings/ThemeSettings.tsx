@@ -14,7 +14,7 @@ function ThemeSettings(props: Props) {
     const { Card, Container } = components; // settings default
 
     return (
-        <Container className="flex col">
+        <Container className="flex col fade-in-animation">
             {" "}
             {route.endsWith("Theme") && (
                 <Card onClick={() => setRoute("🖼️🖼️")} interactice>

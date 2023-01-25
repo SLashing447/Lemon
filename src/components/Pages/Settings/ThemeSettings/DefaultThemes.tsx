@@ -6,12 +6,12 @@ import { components } from "../Settings";
 
 function DefaultThemes() {
     const { ThemeCard } = Components;
-    const [theme, setTheme] = useState<string>("dark");
+    const [theme, setTheme] = useState<string | null>(
+        localStorage.getItem("lemon-web-theme")
+    );
     const { Container } = components; // settings default
     const [selRadio, setSelRadio] = useState("");
     const RadioRef = [
-        useRef<HTMLInputElement | null>(null),
-        useRef<HTMLInputElement | null>(null),
         useRef<HTMLInputElement | null>(null),
         useRef<HTMLInputElement | null>(null),
         useRef<HTMLInputElement | null>(null),
@@ -25,10 +25,12 @@ function DefaultThemes() {
     };
 
     return (
-        <Container style={{ gap: "1rem" }} className="flex col">
-            {" "}
-            <h2 style={{ margin: "0 1rem" }}>Applied Theme : {theme}</h2>
+        <Container
+            style={{ gap: "1rem" }}
+            className="flex col fade-in-animation"
+        >
             <ThemeCard
+                selected={theme === "dark"}
                 onClick={(e) => onClick(e, "dark", 0)}
                 className={"dark-th-btn"}
             >
@@ -41,45 +43,20 @@ function DefaultThemes() {
                 Dark
             </ThemeCard>
             <ThemeCard
-                onClick={(e) => onClick(e, "light", 1)}
-                className={"light-th-btn"}
+                selected={theme === "obsidian"}
+                onClick={(e) => onClick(e, "obsidian", 3)}
+                className={"obi-th-btn"}
             >
-                {" "}
-                <input
-                    id="light-ts"
-                    name="theme"
-                    type="radio"
-                    ref={RadioRef[1]}
-                />
-                Light
-            </ThemeCard>
-            <ThemeCard
-                onClick={(e) => onClick(e, "green", 2)}
-                className={"green-th-btn"}
-            >
-                {" "}
-                <input
-                    name="theme"
-                    id="green-ts"
-                    type="radio"
-                    ref={RadioRef[2]}
-                />
-                Green
-            </ThemeCard>
-            <ThemeCard
-                onClick={(e) => onClick(e, "blue", 3)}
-                className={"blue-th-btn"}
-            >
-                {" "}
                 <input
                     id="blue-ts"
                     name="theme"
                     type="radio"
-                    ref={RadioRef[3]}
+                    ref={RadioRef[1]}
                 />
-                Blue
+                Obsidian
             </ThemeCard>
             <ThemeCard
+                selected={theme === "m-light"}
                 onClick={(e) => onClick(e, "m-light", 4)}
                 className={"moonlight-th-btn"}
             >
@@ -87,7 +64,7 @@ function DefaultThemes() {
                     id="m-light-ts"
                     name="theme"
                     type="radio"
-                    ref={RadioRef[4]}
+                    ref={RadioRef[2]}
                 />
                 <div className="stars"></div>
                 <div className="twinkling"></div>
@@ -99,18 +76,30 @@ function DefaultThemes() {
 }
 
 const Components = {
-    ThemeCard: styled.div`
+    ThemeCard: styled.div<{ selected: boolean }>`
         /* border: 2px solid white; */
         padding: 0.75rem 2rem;
+        /* text-align: center; */
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        > span.text {
+            color: ${(props) => (props.selected ? "white" : "grey")};
+        }
+        color: ${(props) => (props.selected ? "white" : "grey")};
+        font-size: 1.2rem;
         border-radius: 8px;
         cursor: pointer;
         font-weight: bold;
         overflow: hidden;
         position: relative;
+        > input[type="radio"] {
+            display: none;
+        }
         > div {
             border-radius: 6px;
         }
         margin: 0 1rem;
+        padding: 0.75rem 2rem;
     `,
 };
 export default DefaultThemes;

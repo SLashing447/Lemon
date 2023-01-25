@@ -77,7 +77,7 @@ const components = {
         bottom: 63px;
 
         border-radius: 7px 7px 0 0;
-        background-color: #1b1b1b;
+        background-color: var(--primary-bg-2);
         /* box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.6); */
         border: 2px solid #373636;
         border-bottom: none;

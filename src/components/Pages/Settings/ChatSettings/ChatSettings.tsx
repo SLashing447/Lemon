@@ -23,7 +23,7 @@ function ChatSettings(props: Props) {
     };
 
     return (
-        <Container className="flex col">
+        <Container className="flex col fade-in-animation">
             {route.endsWith("Chat") && (
                 <>
                     <Card style={settingCardStyle}>

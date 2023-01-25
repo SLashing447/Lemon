@@ -101,7 +101,7 @@ interface getPageProps {
     contactProps: ContactsPageProps;
     route: string;
 }
-
+//  --primary-bg-1: rgb(51, 51, 51);
 function GetPages(props: getPageProps) {
     const { contactProps, setRoute, route } = props;
 

@@ -15,3 +15,16 @@
     height: 100vh;
     overflow: hidden;
 }
+
+/* Msg Colors  */
+
+:root {
+    --msg-spch-left: rgb(52, 52, 52);
+    --msg-spch-right: #2a5545;
+
+    --msg-spch-left-h: rgb(60, 59, 59);
+    --msg-spch-right-h: #305d4d;
+
+    --bg-accent: #39765f80;
+    --bg-accent-h: #39765f33;
+}

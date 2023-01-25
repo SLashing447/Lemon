@@ -106,7 +106,6 @@ function Profile(props: props) {
                         <div className="cont">{zodiac}</div>
                     </Info>
                 </ProfileInfo>{" "}
-                <MoreInfo className="flex col"></MoreInfo>
             </main>
         </Container>
     );
@@ -114,6 +113,8 @@ function Profile(props: props) {
 const components = {
     Container: styled.div<{ redundant: boolean }>`
         height: 100%;
+        /* border: 2px solid white; */
+        padding: 1rem;
         transition: 0.16s all ease;
 
         border-left: ${(props) =>
@@ -169,7 +170,7 @@ const components = {
         left: 0px;
         width: 100%;
         height: 100%;
-        background-color: #60c3a920;
+        /* background-color: #e3e3e3c; */
         /* opacity: 0.2; */
         z-index: 1;
     `,
@@ -195,10 +196,10 @@ const components = {
         border-bottom: 2px solid rgb(65, 65, 65);
         position: relative;
         cursor: pointer;
-        background-color: #2d2d2d;
+        background-color: var(--primary-bg-2);
         border-radius: inherit;
         :hover {
-            background-color: #383838;
+            background-color: var(--primary-bg-2-h);
         }
         ::after {
             content: "";
@@ -308,9 +309,10 @@ const components = {
     `,
     Header: styled.div`
         width: 100%;
+        border-radius: 15px;
         background-color: var(--bar1-bg);
         /* background-color: #545454; */
-        padding: 1.22rem 1rem;
+        padding: 1rem 1rem;
 
         gap: 1rem;
         > .text {

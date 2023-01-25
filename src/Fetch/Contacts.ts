@@ -58,7 +58,7 @@ const conts: _Contact[] = [
     {
         username: "Nutan_5",
         photoURL: "https://randomuser.me/api/portraits/men/91.jpg",
-        update: null,
+        update: "Hello World &@&9",
         UID: "user123",
     },
 ];

@@ -46,7 +46,7 @@ function Nav(props: props) {
     const { Container, Image, Data, Main } = components;
     const { data, onExit, onClick, isNavMenuOpen, setNavMenuOpen, isTyping } =
         props;
-    const { photoURL, userID, username } = data;
+    const { photoURL, UID, username } = data;
     const [showMenu, setShowMenu] = useState(false);
 
     const IconStyle = { fontSize: "1.57rem", marginRight: "1rem" };
@@ -138,11 +138,11 @@ const components = {
             align-items: center;
             transition: 0.12s all ease;
             :hover {
-                background-color: #ffffff15;
+                background-color: #ffffff11;
             }
         }
-        /* box-shadow: 0 0 2rem black; */
         /* border: 1px solid white; */
+        // ! SHADOW THING VVI
     `,
     Main: styled.div`
         position: relative;
