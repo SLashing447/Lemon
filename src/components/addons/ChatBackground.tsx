@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 function ChatBackground() {
     const { Container } = components;
     // special stars and clound effect on moonLight theme
     const theme = localStorage.getItem("lemon-web-theme");
+    const [text, setText] = useState("");
 
     return (
         <Container
